@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日本中古車センター | Japan Used Cars</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+        }
+        
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .logo span {
+            color: #e94560;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: #e94560;
+        }
+        
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=1920');
+            background-size: cover;
+            background-position: center;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+        
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .search-box {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            display: flex;
+            gap: 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+        
+        .search-box select, .search-box input {
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .search-box button {
+            background: #e94560;
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .search-box button:hover {
+            background: #c73e54;
+        }
+        
+        /* Main Content */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: #1a1a2e;
+            margin-bottom: 0.5rem;
+        }
+        
+        .section-title p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        /* Car Grid */
+        .car-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+        
+        .car-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .car-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        .car-image {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+        }
+        
+        .car-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        
+        .car-card:hover .car-image img {
+            transform: scale(1.05);
+        }
+        
+        .car-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: #e94560;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .car-badge.recommend {
+            background: #00b894;
+        }
+        
+        .car-info {
+            padding: 1.5rem;
+        }
+        
+        .car-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 0.5rem;
+        }
+        
+        .car-subtitle {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+        
+        .car-specs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding: 1rem 0;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .spec-item {
+            text-align: center;
+        }
+        
+        .spec-label {
+            font-size: 0.75rem;
+            color: #999;
+            margin-bottom: 0.2rem;
+        }
+        
+        .spec-value {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .car-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .price {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #e94560;
+        }
+        
+        .price-unit {
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 400;
+        }
+        
+        .btn-detail {
+            background: #1a1a2e;
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .btn-detail:hover {
+            background: #e94560;
+        }
+        
+        /* Features Section */
+        .features {
+            background: white;
+            padding: 4rem 0;
+            margin-top: 3rem;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .feature-item {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+        }
+        
+        .feature-item h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #1a1a2e;
+        }
+        
+        .feature-item p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        /* Footer */
+        footer {
+            background: #1a1a2e;
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: #e94560;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-section a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section a:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid #333;
+            color: #666;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            
+            .search-box {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                display: none;
+            }
+            
+            .car-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                🚗 <span>JUC</span>日本中古車センター
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">ホーム</a></li>
+                    <li><a href="#cars">在庫車両</a></li>
+                    <li><a href="#about">会社概要</a></li>
+                    <li><a href="#contact">お問い合わせ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>信頼できる日本の中古車</h1>
+            <p>厳選された高品質中古車をお届けします</p>
+            <div class="search-box">
+                <select>
+                    <option>メーカー</option>
+                    <option>トヨタ</option>
+                    <option>ホンダ</option>
+                    <option>日産</option>
+                    <option>スズキ</option>
+                    <option>ダイハツ</option>
+                </select>
+                <select>
+                    <option>価格帯</option>
+                    <option>50万円以下</option>
+                    <option>50-100万円</option>
+                    <option>100-150万円</option>
+                    <option>150万円以上</option>
+                </select>
+                <input type="text" placeholder="キーワード検索...">
+                <button>検索</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Car Listings -->
+    <section class="container" id="cars">
+        <div class="section-title">
+            <h2>おすすめ中古車</h2>
+            <p>厳選された高品質車両をご紹介</p>
+        </div>
+        
+        <div class="car-grid">
+            <!-- Car 1 -->
+            <div class="car-card">
+                <div class="car-image">
+                    <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=600" alt="Toyota Prius">
+                    <span class="car-badge recommend">おすすめ</span>
+                </div>
+                <div class="car-info">
+                    <h3 class="car-title">トヨタ プリウス</h3>
+                    <p class="car-subtitle">Sツーリングセレクション</p>
+                    <div class="car-specs">
+                        <div class="spec-item">
+                            <div class="spec-label">年式</div>
+                            <div class="spec-value">2022年</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">走行距離</div>
+                            <div class="spec-value">2.1万km</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">排気量</div>
+                            <div class="spec-value">1.8L</div>
+                        </div>
+                    </div>
+                    <div class="car-price">
+                        <div class="price">268<span class="price-unit">万円</span></div>
+                        <button class="btn-detail">詳細を見る</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Car 2 -->
+            <div class="car-card">
+                <div class="car-image">
+                    <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=600" alt="Honda Fit">
+                    <span class="car-badge">人気</span>
+                </div>
+                <div class="car-info">
+                    <h3 class="car-title">ホンダ フィット</h3>
+                    <p class="car-subtitle">e:HEV ホーム</p>
+                    <div class="car-specs">
+                        <div class="spec-item">
+                            <div class="spec-label">年式</div>
+                            <div class="spec-value">2023年</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">走行距離</div>
+                            <div class="spec-value">0.8万km</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">排気量</div>
+                            <div class="spec-value">1.5L</div>
+                        </div>
+                    </div>
+                    <div class="car-price">
+                        <div class="price">198<span class="price-unit">万円</span></div>
+                        <button class="btn-detail">詳細を見る</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Car 3 -->
+            <div class="car-card">
+                <div class="car-image">
+                    <img src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=600" alt="Daihatsu Mira">
+                    <span class="car-badge recommend">おすすめ</span>
+                </div>
+                <div class="car-info">
+                    <h3 class="car-title">ダイハツ ミライース</h3>
+                    <p class="car-subtitle">G SA III</p>
+                    <div class="car-specs">
+                        <div class="spec-item">
+                            <div class="spec-label">年式</div>
+                            <div class="spec-value">2024年</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">走行距離</div>
+                            <div class="spec-value">0.3万km</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">排気量</div>
+                            <div class="spec-value">660cc</div>
+                        </div>
+                    </div>
+                    <div class="car-price">
+                        <div class="price">128<span class="price-unit">万円</span></div>
+                        <button class="btn-detail">詳細を見る</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Car 4 -->
+            <div class="car-card">
+                <div class="car-image">
+                    <img src="https://images.unsplash.com/photo-1617788138017-80ad40651399?w=600" alt="Nissan Note">
+                    <span class="car-badge">新入荷</span>
+                </div>
+                <div class="car-info">
+                    <h3 class="car-title">日産 ノート</h3>
+                    <p class="car-subtitle">e-POWER X</p>
+                    <div class="car-specs">
+                        <div class="spec-item">
+                            <div class="spec-label">年式</div>
+                            <div class="spec-value">2023年</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">走行距離</div>
+                            <div class="spec-value">1.5万km</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">排気量</div>
+                            <div class="spec-value">1.2L</div>
+                        </div>
+                    </div>
+                    <div class="car-price">
+                        <div class="price">218<span class="price-unit">万円</span></div>
+                        <button class="btn-detail">詳細を見る</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Car 5 -->
+            <div class="car-card">
+                <div class="car-image">
+                    <img src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=600" alt="Suzuki Swift">
+                    <span class="car-badge">限定</span>
+                </div>
+                <div class="car-info">
+                    <h3 class="car-title">スズキ スイフト</h3>
+                    <p class="car-subtitle">スポーツ 1.4</p>
+                    <div class="car-specs">
+                        <div class="spec-item">
+                            <div class="spec-label">年式</div>
+                            <div class="spec-value">2022年</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">走行距離</div>
+                            <div class="spec-value">3.2万km</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">排気量</div>
+                            <div class="spec-value">1.4L</div>
+                        </div>
+                    </div>
+                    <div class="car-price">
+                        <div class="price">178<span class="price-unit">万円</span></div>
+                        <button class="btn-detail">詳細を見る</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Car 6 -->
+            <div class="car-card">
+                <div class="car-image">
+                    <img src="https://images.unsplash.com/photo-1550355291-bbee04a92027?w=600" alt="Toyota Aqua">
+                    <span class="car-badge recommend">おすすめ</span>
+                </div>
+                <div class="car-info">
+                    <h3 class="car-title">トヨタ アクア</h3>
+                    <p class="car-subtitle">G ソフトレザーセレクション</p>
+                    <div class="car-specs">
+                        <div class="spec-item">
+                            <div class="spec-label">年式</div>
+                            <div class="spec-value">2023年</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">走行距離</div>
+                            <div class="spec-value">0.9万km</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">排気量</div>
+                            <div class="spec-value">1.5L</div>
+                        </div>
+                    </div>
+                    <div class="car-price">
+                        <div class="price">238<span class="price-unit">万円</span></div>
+                        <button class="btn-detail">詳細を見る</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="section-title">
+            <h2>なぜ私たちを選ぶ？</h2>
+            <p>安心のサービスと充実のサポート</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-icon">✓</div>
+                <h3>厳選された車両</h3>
+                <p>全車両を専門スタッフが徹底検査。事故歴なしの良質な車のみを取り扱います。</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🛡️</div>
+                <h3>1年保証付き</h3>
+                <p>全車に無料で1年間の保証を付帯。エンジン・ミッション等主要部品をカバー。</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🚚</div>
+                <h3>全国納車対応</h3>
+                <p>日本全国どこでも納車可能。遠方のお客様も安心してご購入いただけます。</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">💰</div>
+                <h3>ローン審査OK</h3>
+                <p>頭金0円〜OK！審査が不安な方もお気軽にご相談ください。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>日本中古車センター</h3>
+                <p style="color: #aaa; line-height: 1.8;">
+                    厳選された高品質中古車を<br>
+                    全国のお客様にお届けします。<br>
+                    安心の保証と充実のアフターサポート。
+                </p>
+            </div>
+            <div class="footer-section">
+                <h3>クイックリンク</h3>
+                <ul>
+                    <li><a href="#">在庫車両一覧</a></li>
+                    <li><a href="#">買取査定</a></li>
+                    <li><a href="#">ローンシミュレーション</a></li>
+                    <li><a href="#">店舗案内</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>サポート</h3>
+                <ul>
+                    <li><a href="#">よくある質問</a></li>
+                    <li><a href="#">保証について</a></li>
+                    <li><a href="#">お問い合わせ</a></li>
+                    <li><a href="#">プライバシーポリシー</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>お問い合わせ</h3>
+                <p style="color: #aaa; line-height: 1.8;">
+                    TEL: 03-1234-5678<br>
+                    営業時間: 10:00-19:00<br>
+                    定休日: 水曜日<br>
+                    Email: info@juc.co.jp
+                </p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Japan Used Cars Center. All Rights Reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
