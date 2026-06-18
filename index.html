@@ -104,21 +104,21 @@
         .price-note { font-size: 0.8rem; color: #999; background: #f8f9fa; padding: 0.2rem 0.6rem; border-radius: 4px; }
         .car-specs {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 0.7rem;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
             margin-bottom: 1rem;
-            padding: 1rem 0;
+            padding: 0.8rem 0;
             border-top: 1px solid #eee;
             border-bottom: 1px solid #eee;
         }
         .spec-item {
             text-align: center;
             background: #f8f9fa;
-            padding: 0.6rem 0.3rem;
-            border-radius: 8px;
+            padding: 0.4rem 0.2rem;
+            border-radius: 6px;
         }
-        .spec-label { font-size: 0.7rem; color: #888; margin-bottom: 0.25rem; }
-        .spec-value { font-size: 0.85rem; font-weight: 600; color: #333; }
+        .spec-label { font-size: 0.65rem; color: #999; margin-bottom: 0.15rem; }
+        .spec-value { font-size: 0.8rem; font-weight: 600; color: #333; }
         .car-features {
             font-size: 0.9rem;
             color: #555;
@@ -209,7 +209,7 @@
 
         @media (max-width: 1200px) {
             .car-grid { grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); }
-            .car-specs { grid-template-columns: repeat(5, 1fr); }
+            .car-specs { grid-template-columns: repeat(3, 1fr); }
         }
         @media (max-width: 768px) {
             .hero-content h1 { font-size: 2rem; }
