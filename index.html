@@ -66,7 +66,7 @@
             transition: transform 0.3s, box-shadow 0.3s;
         }
         .car-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
-        .car-image { position: relative; height: 240px; overflow: hidden; }
+        .car-image { position: relative; height: 240px; overflow: hidden; cursor: pointer; }
         .car-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
         .car-card:hover .car-image img { transform: scale(1.05); }
         .car-badge {
@@ -110,6 +110,92 @@
             transition: background 0.3s;
         }
         .btn-detail:hover { background: #e94560; }
+
+        /* Modal / Lightbox */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalFadeIn 0.3s ease;
+        }
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .modal-close {
+            position: absolute;
+            top: 1rem; right: 1rem;
+            width: 40px; height: 40px;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-close:hover { background: #e94560; }
+        .modal-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 15px 15px 0 0;
+        }
+        .modal-body { padding: 2rem; }
+        .modal-title { font-size: 1.8rem; font-weight: 700; color: #1a1a2e; margin-bottom: 0.5rem; }
+        .modal-subtitle { color: #666; font-size: 1.1rem; margin-bottom: 1.5rem; }
+        .modal-price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #e94560;
+            margin-bottom: 1.5rem;
+        }
+        .modal-specs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .modal-spec-item {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .modal-spec-label { font-size: 0.8rem; color: #999; margin-bottom: 0.3rem; }
+        .modal-spec-value { font-size: 1rem; font-weight: 600; color: #333; }
+        .modal-description {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        .modal-contact {
+            background: #1a1a2e;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .modal-contact a { color: #e94560; text-decoration: none; font-weight: 600; }
 
         /* Features */
         .features { background: white; padding: 4rem 0; margin-top: 3rem; }
@@ -162,6 +248,8 @@
             .hero-content h1 { font-size: 2rem; }
             nav ul { display: none; }
             .car-grid { grid-template-columns: 1fr; }
+            .modal-image { height: 250px; }
+            .modal-title { font-size: 1.4rem; }
         }
     </style>
 </head>
@@ -198,7 +286,7 @@
         <div class="car-grid">
 
             <!-- Car 1: Daihatsu Mira e:S -->
-            <div class="car-card">
+            <div class="car-card" data-car-id="1">
                 <div class="car-image">
                     <img src="images/car1.jpg" alt="Daihatsu Mira e:S">
                     <span class="car-badge recommend">K-Car</span>
@@ -219,7 +307,7 @@
             </div>
 
             <!-- Car 2: Suzuki Wagon R -->
-            <div class="car-card">
+            <div class="car-card" data-car-id="2">
                 <div class="car-image">
                     <img src="images/car2.jpg" alt="Suzuki Wagon R">
                     <span class="car-badge recommend">K-Car</span>
@@ -240,7 +328,7 @@
             </div>
 
             <!-- Car 3: Lexus RX 450h -->
-            <div class="car-card">
+            <div class="car-card" data-car-id="3">
                 <div class="car-image">
                     <img src="images/car5.jpg" alt="Lexus RX 450h">
                     <span class="car-badge new">ハイブリッドSUV</span>
@@ -261,7 +349,7 @@
             </div>
 
             <!-- Car 4: Toyota Prius (Blue) -->
-            <div class="car-card">
+            <div class="car-card" data-car-id="4">
                 <div class="car-image">
                     <img src="images/car4.jpg" alt="Toyota Prius">
                     <span class="car-badge recommend">ハイブリッド</span>
@@ -282,7 +370,7 @@
             </div>
 
             <!-- Car 5: Toyota Aqua (Silver) -->
-            <div class="car-card">
+            <div class="car-card" data-car-id="5">
                 <div class="car-image">
                     <img src="images/car6.jpg" alt="Toyota Aqua">
                     <span class="car-badge">ハイブリッド</span>
@@ -303,7 +391,7 @@
             </div>
 
             <!-- Car 6: Nissan X-Trail -->
-            <div class="car-card">
+            <div class="car-card" data-car-id="6">
                 <div class="car-image">
                     <img src="images/car7.jpg" alt="Nissan X-Trail">
                     <span class="car-badge new">SUV</span>
@@ -324,7 +412,7 @@
             </div>
 
             <!-- Car 7: Nissan Serena Highway Star -->
-            <div class="car-card">
+            <div class="car-card" data-car-id="7">
                 <div class="car-image">
                     <img src="images/car10.jpg" alt="Nissan Serena">
                     <span class="car-badge recommend">MPV e-POWER</span>
@@ -421,5 +509,201 @@
             <p>&copy; 2024 鹏程贸易合同会社. All Rights Reserved.</p>
         </div>
     </footer>
+
+    <!-- Detail Modal -->
+    <div class="modal-overlay" id="carModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <img class="modal-image" id="modalImage" src="" alt="">
+            <div class="modal-body">
+                <h2 class="modal-title" id="modalTitle"></h2>
+                <p class="modal-subtitle" id="modalSubtitle"></p>
+                <div class="modal-price" id="modalPrice"></div>
+                <div class="modal-specs" id="modalSpecs"></div>
+                <div class="modal-description" id="modalDescription"></div>
+                <div class="modal-contact">
+                    この車両についてのお問い合わせは <a href="mailto:g9150739@outlook.com">g9150739@outlook.com</a> または WeChat: kissik123 まで
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const carData = {
+            1: {
+                title: "ダイハツ ミライース e:S",
+                subtitle: "G Turbo SA III / レッド / 2WD",
+                price: "98万円",
+                image: "images/car1.jpg",
+                specs: {
+                    "年式": "2024年",
+                    "走行距離": "0.3万km",
+                    "排気量": "660cc",
+                    "駆動方式": "2WD",
+                    "ミッション": "CVT",
+                    "燃料": "ガソリン"
+                },
+                description: "低走行の新型K-car。ターボ搭載で走りも軽快、燃費も優秀。街乗りや通勤通学に最適な1台です。"
+            },
+            2: {
+                title: "スズキ ワゴンR",
+                subtitle: "MH55S / ライトブルー / 2WD",
+                price: "75万円",
+                image: "images/car2.jpg",
+                specs: {
+                    "年式": "2022年",
+                    "走行距離": "2.8万km",
+                    "排気量": "660cc",
+                    "駆動方式": "2WD",
+                    "ミッション": "CVT",
+                    "燃料": "ガソリン"
+                },
+                description: "日本を代表する定番K-car。広々とした室内空間と優れた視界が人気。日常使いに欠かせない実用車です。"
+            },
+            3: {
+                title: "レクサス RX 450h",
+                subtitle: "AL20 Version L / シルバー / 4WD",
+                price: "398万円",
+                image: "images/car5.jpg",
+                specs: {
+                    "年式": "2018年",
+                    "走行距離": "5.2万km",
+                    "排気量": "3.5L HV",
+                    "駆動方式": "4WD",
+                    "ミッション": "CVT",
+                    "燃料": "ハイブリッド"
+                },
+                description: "レクサスのフラグシップハイブリッドSUV。上質な内装と静かな走行、豊富な装備が魅力。高級感あふれる1台です。"
+            },
+            4: {
+                title: "トヨタ プリウス",
+                subtitle: "ZVW30 / ダークブルー / 2WD",
+                price: "58万円",
+                image: "images/car4.jpg",
+                specs: {
+                    "年式": "2010年",
+                    "走行距離": "8.5万km",
+                    "排気量": "1.8L HV",
+                    "駆動方式": "2WD",
+                    "ミッション": "CVT",
+                    "燃料": "ハイブリッド"
+                },
+                description: "世界で最も有名なハイブリッドカー。低燃費で信頼性も高く、輸出市場でも人気のモデルです。"
+            },
+            5: {
+                title: "トヨタ アクア",
+                subtitle: "NHP10 G / シルバー / 2WD",
+                price: "65万円",
+                image: "images/car6.jpg",
+                specs: {
+                    "年式": "2013年",
+                    "走行距離": "7.2万km",
+                    "排気量": "1.5L HV",
+                    "駆動方式": "2WD",
+                    "ミッション": "CVT",
+                    "燃料": "ハイブリッド"
+                },
+                description: "コンパクトなハイブリッドカー。プリウスより小回りが利き、都市部での使用に最適です。"
+            },
+            6: {
+                title: "日産 エクストレイル",
+                subtitle: "T32 2.0 4WD / シルバー",
+                price: "148万円",
+                image: "images/car7.jpg",
+                specs: {
+                    "年式": "2016年",
+                    "走行距離": "6.8万km",
+                    "排気量": "2.0L",
+                    "駆動方式": "4WD",
+                    "ミッション": "CVT",
+                    "燃料": "ガソリン"
+                },
+                description: "人気のコンパクトSUV。4WDで悪路も安心、広々としたラゲッジスペースはアウトドアやファミリー向け。"
+            },
+            7: {
+                title: "日産セレナ ハイウェイスター",
+                subtitle: "C27 e-POWER Highway Star / ブラック",
+                price: "228万円",
+                image: "images/car10.jpg",
+                specs: {
+                    "年式": "2019年",
+                    "走行距離": "4.5万km",
+                    "排気量": "2.0L HV",
+                    "駆動方式": "2WD",
+                    "ミッション": "e-POWER",
+                    "燃料": "ハイブリッド"
+                },
+                description: "日産のe-POWERハイブリッドミニバン。静かで力強い走りと広々とした7人乗り空間が魅力。ファミリーカーとして最適です。"
+            }
+        };
+
+        const modal = document.getElementById('carModal');
+        const modalImage = document.getElementById('modalImage');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalSubtitle = document.getElementById('modalSubtitle');
+        const modalPrice = document.getElementById('modalPrice');
+        const modalSpecs = document.getElementById('modalSpecs');
+        const modalDescription = document.getElementById('modalDescription');
+        const modalClose = document.getElementById('modalClose');
+
+        function openModal(carId) {
+            const car = carData[carId];
+            if (!car) return;
+
+            modalImage.src = car.image;
+            modalImage.alt = car.title;
+            modalTitle.textContent = car.title;
+            modalSubtitle.textContent = car.subtitle;
+            modalPrice.textContent = car.price;
+            modalDescription.textContent = car.description;
+
+            modalSpecs.innerHTML = '';
+            for (const [label, value] of Object.entries(car.specs)) {
+                modalSpecs.innerHTML += `
+                    <div class="modal-spec-item">
+                        <div class="modal-spec-label">${label}</div>
+                        <div class="modal-spec-value">${value}</div>
+                    </div>
+                `;
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.querySelectorAll('.car-card').forEach(card => {
+            const carId = card.getAttribute('data-car-id');
+            const btn = card.querySelector('.btn-detail');
+            const image = card.querySelector('.car-image');
+
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                openModal(carId);
+            });
+
+            image.addEventListener('click', () => {
+                openModal(carId);
+            });
+        });
+
+        modalClose.addEventListener('click', closeModal);
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+    </script>
 </body>
 </html>
