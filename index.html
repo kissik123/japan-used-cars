@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>日本中古車センター | Japan Used Cars</title>
+    <title>日本二手车中心 | Japan Used Cars</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Nastaliq+Urdu&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Noto Sans JP', sans-serif;
+            font-family: 'Noto Sans SC', 'Noto Sans JP', sans-serif;
             background: #f5f5f5;
             color: #333;
         }
@@ -30,13 +30,12 @@
             justify-content: space-between;
             align-items: center;
         }
-        .logo { font-size: 1.8rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; }
+        .logo { font-size: 1.7rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; }
         .logo span { color: #e94560; }
         nav ul { display: flex; list-style: none; gap: 2rem; }
         nav a { color: white; text-decoration: none; font-weight: 500; transition: color 0.3s; }
         nav a:hover { color: #e94560; }
 
-        /* Hero */
         .hero {
             margin-top: 80px;
             background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('images/car5.jpg') center/cover no-repeat;
@@ -50,23 +49,31 @@
         .hero-content h1 { font-size: 3rem; margin-bottom: 1rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
         .hero-content p { font-size: 1.3rem; margin-bottom: 2rem; opacity: 0.9; }
 
-        /* Main */
         .container { max-width: 1400px; margin: 0 auto; padding: 3rem 2rem; }
         .section-title { text-align: center; margin-bottom: 3rem; }
         .section-title h2 { font-size: 2.2rem; color: #1a1a2e; margin-bottom: 0.5rem; }
         .section-title p { color: #666; font-size: 1.1rem; }
 
-        /* Car Grid */
-        .car-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 2rem; }
+        .car-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+            gap: 2rem;
+        }
         .car-card {
             background: white;
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
             transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
         }
         .car-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
-        .car-image { position: relative; height: 240px; overflow: hidden; cursor: pointer; }
+        .car-image {
+            position: relative;
+            height: 240px;
+            overflow: hidden;
+        }
         .car-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
         .car-card:hover .car-image img { transform: scale(1.05); }
         .car-badge {
@@ -74,131 +81,83 @@
             top: 1rem; left: 1rem;
             background: #e94560;
             color: white;
-            padding: 0.3rem 0.8rem;
+            padding: 0.35rem 0.9rem;
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 600;
         }
         .car-badge.recommend { background: #00b894; }
         .car-badge.new { background: #0984e3; }
-        .car-info { padding: 1.5rem; }
-        .car-title { font-size: 1.3rem; font-weight: 700; color: #1a1a2e; margin-bottom: 0.3rem; }
-        .car-subtitle { color: #666; font-size: 0.95rem; margin-bottom: 1rem; }
+        .car-info { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; }
+        .car-title { font-size: 1.35rem; font-weight: 700; color: #1a1a2e; margin-bottom: 0.3rem; }
+        .car-subtitle { color: #666; font-size: 0.95rem; margin-bottom: 0.8rem; }
+        .car-price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        .price { font-size: 1.9rem; font-weight: 700; color: #e94560; }
+        .price-unit { font-size: 0.95rem; color: #666; font-weight: 400; margin-left: 0.2rem; }
+        .price-note { font-size: 0.8rem; color: #999; background: #f8f9fa; padding: 0.2rem 0.6rem; border-radius: 4px; }
         .car-specs {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 0.7rem;
             margin-bottom: 1rem;
             padding: 1rem 0;
             border-top: 1px solid #eee;
             border-bottom: 1px solid #eee;
         }
-        .spec-item { text-align: center; }
-        .spec-label { font-size: 0.75rem; color: #999; margin-bottom: 0.2rem; }
-        .spec-value { font-size: 0.95rem; font-weight: 600; color: #333; }
-        .car-price { display: flex; justify-content: space-between; align-items: center; }
-        .price { font-size: 1.6rem; font-weight: 700; color: #e94560; }
-        .price-unit { font-size: 0.9rem; color: #666; font-weight: 400; }
-        .btn-detail {
+        .spec-item {
+            text-align: center;
+            background: #f8f9fa;
+            padding: 0.6rem 0.3rem;
+            border-radius: 8px;
+        }
+        .spec-label { font-size: 0.7rem; color: #888; margin-bottom: 0.25rem; }
+        .spec-value { font-size: 0.85rem; font-weight: 600; color: #333; }
+        .car-features {
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+            padding: 0.8rem;
+            background: #fff8f0;
+            border-left: 3px solid #e94560;
+            border-radius: 0 8px 8px 0;
+        }
+        .car-features strong { color: #e94560; }
+        .car-description {
+            font-size: 0.92rem;
+            color: #555;
+            line-height: 1.75;
+            margin-bottom: 1.2rem;
+            flex: 1;
+        }
+        .car-contact {
+            text-align: center;
+            margin-top: auto;
+        }
+        .car-contact a {
+            display: inline-block;
             background: #1a1a2e;
             color: white;
-            border: none;
-            padding: 0.6rem 1.2rem;
+            text-decoration: none;
+            padding: 0.7rem 2rem;
             border-radius: 5px;
-            font-size: 0.9rem;
-            cursor: pointer;
+            font-weight: 500;
             transition: background 0.3s;
         }
-        .btn-detail:hover { background: #e94560; }
+        .car-contact a:hover { background: #e94560; }
 
-        /* Modal / Lightbox */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            padding: 1rem;
-        }
-        .modal-overlay.active { display: flex; }
-        .modal-content {
+        .features {
             background: white;
-            border-radius: 15px;
-            max-width: 900px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-            animation: modalFadeIn 0.3s ease;
+            padding: 4rem 0;
+            margin-top: 3rem;
         }
-        @keyframes modalFadeIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .modal-close {
-            position: absolute;
-            top: 1rem; right: 1rem;
-            width: 40px; height: 40px;
-            background: rgba(0,0,0,0.5);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            font-size: 1.5rem;
-            cursor: pointer;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .modal-close:hover { background: #e94560; }
-        .modal-image {
-            width: 100%;
-            height: 400px;
-            object-fit: cover;
-            border-radius: 15px 15px 0 0;
-        }
-        .modal-body { padding: 2rem; }
-        .modal-title { font-size: 1.8rem; font-weight: 700; color: #1a1a2e; margin-bottom: 0.5rem; }
-        .modal-subtitle { color: #666; font-size: 1.1rem; margin-bottom: 1.5rem; }
-        .modal-price {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #e94560;
-            margin-bottom: 1.5rem;
-        }
-        .modal-specs {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-        .modal-spec-item {
-            background: #f8f9fa;
-            padding: 1rem;
-            border-radius: 10px;
-            text-align: center;
-        }
-        .modal-spec-label { font-size: 0.8rem; color: #999; margin-bottom: 0.3rem; }
-        .modal-spec-value { font-size: 1rem; font-weight: 600; color: #333; }
-        .modal-description {
-            color: #555;
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
-        }
-        .modal-contact {
-            background: #1a1a2e;
-            color: white;
-            padding: 1rem 1.5rem;
-            border-radius: 10px;
-            text-align: center;
-        }
-        .modal-contact a { color: #e94560; text-decoration: none; font-weight: 600; }
-
-        /* Features */
-        .features { background: white; padding: 4rem 0; margin-top: 3rem; }
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -217,11 +176,11 @@
             justify-content: center;
             margin: 0 auto 1.5rem;
             font-size: 2rem;
+            color: white;
         }
         .feature-item h3 { font-size: 1.2rem; margin-bottom: 0.5rem; color: #1a1a2e; }
         .feature-item p { color: #666; font-size: 0.95rem; }
 
-        /* Footer */
         footer { background: #1a1a2e; color: white; padding: 3rem 0 1rem; }
         .footer-content {
             max-width: 1400px;
@@ -244,15 +203,18 @@
             color: #666;
         }
 
+        @media (max-width: 1200px) {
+            .car-grid { grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); }
+            .car-specs { grid-template-columns: repeat(5, 1fr); }
+        }
         @media (max-width: 768px) {
             .hero-content h1 { font-size: 2rem; }
             nav ul { display: none; }
             .car-grid { grid-template-columns: 1fr; }
-            .modal-image { height: 250px; }
-            .modal-title { font-size: 1.4rem; }
+            .car-specs { grid-template-columns: repeat(2, 1fr); }
+            .price { font-size: 1.5rem; }
         }
 
-        /* Language Switcher */
         .lang-switcher { display: flex; gap: 0.5rem; align-items: center; }
         .lang-btn {
             background: transparent;
@@ -269,195 +231,293 @@
         body[dir="rtl"] .header-container { flex-direction: row-reverse; }
         body[dir="rtl"] nav ul { flex-direction: row-reverse; }
         body[dir="rtl"] .car-specs { direction: rtl; }
-        body[dir="rtl"] .car-price { flex-direction: row-reverse; }
-        body[dir="rtl"] .modal-specs { direction: rtl; }
+        body[dir="rtl"] .car-price-row { flex-direction: row-reverse; }
+        body[dir="rtl"] .car-features {
+            border-left: none;
+            border-right: 3px solid #e94560;
+            border-radius: 8px 0 0 8px;
+        }
         body[dir="rtl"] .features-grid { direction: rtl; }
         body[dir="rtl"] .footer-content { direction: rtl; }
-        body[dir="rtl"] .modal-close { right: auto; left: 1rem; }
         body.lang-ur { font-family: 'Noto Nastaliq Urdu', 'Noto Sans JP', serif; }
-        body.lang-zh { font-family: 'Noto Sans SC', 'Noto Sans JP', sans-serif; }
-
+        body.lang-ur .car-title { font-size: 1.6rem; }
+        body.lang-ur .spec-value { font-size: 0.8rem; }
     </style>
 </head>
 <body>
     <header>
         <div class="header-container">
-            <div class="logo">JUC <span data-i18n="siteName">日本中古車センター</span></div>
+            <div class="logo">JUC <span data-i18n="siteName">日本二手车中心</span></div>
             <div class="lang-switcher">
                 <button class="lang-btn active" data-lang="zh">中文</button>
                 <button class="lang-btn" data-lang="ur">اردو</button>
             </div>
             <nav>
                 <ul>
-                    <li><a href="#home" data-i18n="navHome">ホーム</a></li>
-                    <li><a href="#cars" data-i18n="navCars">在庫車両</a></li>
-                    <li><a href="#about" data-i18n="navAbout">会社概要</a></li>
-                    <li><a href="#contact" data-i18n="navContact">お問い合わせ</a></li>
+                    <li><a href="#home" data-i18n="navHome">首页</a></li>
+                    <li><a href="#cars" data-i18n="navCars">库存车辆</a></li>
+                    <li><a href="#about" data-i18n="navAbout">公司简介</a></li>
+                    <li><a href="#contact" data-i18n="navContact">联系我们</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <!-- Hero -->
     <section class="hero" id="home">
         <div class="hero-content">
-            <h1 data-i18n="heroTitle">信頼できる日本の中古車</h1>
-            <p data-i18n="heroSubtitle">厳選された高品質中古車をお届けします | Export Worldwide</p>
+            <h1 data-i18n="heroTitle">值得信赖的日本二手车</h1>
+            <p data-i18n="heroSubtitle">为您精选高品质二手车 | 全球出口</p>
         </div>
     </section>
 
-    <!-- Car Listings -->
     <section class="container" id="cars">
         <div class="section-title">
-            <h2 data-i18n="inventoryTitle">在庫車両一覧</h2>
-            <p data-i18n="inventorySubtitle">現在在庫のある車両をご紹介（全7台）</p>
+            <h2 data-i18n="inventoryTitle">库存车辆一览</h2>
+            <p data-i18n="inventorySubtitle">当前在售车辆（共7台）</p>
         </div>
 
         <div class="car-grid">
-
-            <!-- Car 1: Daihatsu Mira e:S -->
+            <!-- Car 1 -->
             <div class="car-card" data-car-id="1">
                 <div class="car-image">
-                    <img src="images/car1.jpg" alt="Daihatsu Mira e:S">
+                    <img src="images/car1.jpg" alt="大发 Mira e:S">
                     <span class="car-badge recommend">K-Car</span>
                 </div>
                 <div class="car-info">
-                    <h3 class="car-title">ダイハツ ミライース e:S</h3>
-                    <p class="car-subtitle">G Turbo SA III / レッド</p>
-                    <div class="car-specs">
-                        <div class="spec-item"><div class="spec-label">年式</div><div class="spec-value">2024年</div></div>
-                        <div class="spec-item"><div class="spec-label">走行距離</div><div class="spec-value">0.3万km</div></div>
-                        <div class="spec-item"><div class="spec-label">排気量</div><div class="spec-value">660cc</div></div>
-                    </div>
-                    <div class="car-price">
+                    <h3 class="car-title" data-i18n="car1Title">大发 Mira e:S</h3>
+                    <p class="car-subtitle" data-i18n="car1Subtitle">G Turbo SA III / レッド / 2WD</p>
+                    <div class="car-price-row">
                         <div class="price">98<span class="price-unit">万円</span></div>
-                        <button class="btn-detail" data-i18n="btnDetail">詳細を見る</button>
+                        <span class="price-note">CIF参考价</span>
+                    </div>
+                    <div class="car-specs">
+                        <div class="spec-item"><div class="spec-label">年份</div><div class="spec-value">2024年</div></div>
+                        <div class="spec-item"><div class="spec-label">行驶里程</div><div class="spec-value">0.3万km</div></div>
+                        <div class="spec-item"><div class="spec-label">排量</div><div class="spec-value">660cc</div></div>
+                        <div class="spec-item"><div class="spec-label">驱动方式</div><div class="spec-value">2WD</div></div>
+                        <div class="spec-item"><div class="spec-label">变速箱</div><div class="spec-value">CVT</div></div>
+                        <div class="spec-item"><div class="spec-label">燃料类型</div><div class="spec-value">汽油</div></div>
+                        <div class="spec-item"><div class="spec-label">油耗(km/L)</div><div class="spec-value">25.4 km/L</div></div>
+                        <div class="spec-item"><div class="spec-label">定员</div><div class="spec-value">4人</div></div>
+                        <div class="spec-item"><div class="spec-label">车检到期</div><div class="spec-value">2027年5月</div></div>
+                        <div class="spec-item"><div class="spec-label">颜色</div><div class="spec-value">红色</div></div>
+                    </div>
+                    <div class="car-features">
+                        <strong>配置亮点：</strong><span data-i18n="car1Features">涡轮增压 / 智能辅助刹车 / 车道偏离预警 / 倒车影像 / 无钥匙进入 / 原厂导航</span>
+                    </div>
+                    <div class="car-description" data-i18n="car1Desc">2024年准新车，仅行驶3000公里。搭载660cc涡轮增压发动机，动力轻快，油耗极低（WLTC 25.4km/L），是日本K-Car中的人气省油车型。配备智能辅助刹车、车道偏离预警、倒车影像等安全配置，城市通勤和日常代步首选。车身小巧灵活，停车方便，维护成本低，出口东南亚和非洲市场非常受欢迎。</div>
+                    <div class="car-contact">
+                        <a href="mailto:g9150739@outlook.com" data-i18n="btnInquiry">立即询价</a>
                     </div>
                 </div>
             </div>
 
-            <!-- Car 2: Suzuki Wagon R -->
+            <!-- Car 2 -->
             <div class="car-card" data-car-id="2">
                 <div class="car-image">
-                    <img src="images/car2.jpg" alt="Suzuki Wagon R">
+                    <img src="images/car2.jpg" alt="铃木 Wagon R">
                     <span class="car-badge recommend">K-Car</span>
                 </div>
                 <div class="car-info">
-                    <h3 class="car-title">スズキ ワゴンR</h3>
-                    <p class="car-subtitle">MH55S / ライトブルー</p>
-                    <div class="car-specs">
-                        <div class="spec-item"><div class="spec-label">年式</div><div class="spec-value">2022年</div></div>
-                        <div class="spec-item"><div class="spec-label">走行距離</div><div class="spec-value">2.8万km</div></div>
-                        <div class="spec-item"><div class="spec-label">排気量</div><div class="spec-value">660cc</div></div>
-                    </div>
-                    <div class="car-price">
+                    <h3 class="car-title" data-i18n="car2Title">铃木 Wagon R</h3>
+                    <p class="car-subtitle" data-i18n="car2Subtitle">MH55S / ライトブルー / 2WD</p>
+                    <div class="car-price-row">
                         <div class="price">75<span class="price-unit">万円</span></div>
-                        <button class="btn-detail" data-i18n="btnDetail">詳細を見る</button>
+                        <span class="price-note">CIF参考价</span>
+                    </div>
+                    <div class="car-specs">
+                        <div class="spec-item"><div class="spec-label">年份</div><div class="spec-value">2022年</div></div>
+                        <div class="spec-item"><div class="spec-label">行驶里程</div><div class="spec-value">2.8万km</div></div>
+                        <div class="spec-item"><div class="spec-label">排量</div><div class="spec-value">660cc</div></div>
+                        <div class="spec-item"><div class="spec-label">驱动方式</div><div class="spec-value">2WD</div></div>
+                        <div class="spec-item"><div class="spec-label">变速箱</div><div class="spec-value">CVT</div></div>
+                        <div class="spec-item"><div class="spec-label">燃料类型</div><div class="spec-value">汽油</div></div>
+                        <div class="spec-item"><div class="spec-label">油耗(km/L)</div><div class="spec-value">24.6 km/L</div></div>
+                        <div class="spec-item"><div class="spec-label">定员</div><div class="spec-value">4人</div></div>
+                        <div class="spec-item"><div class="spec-label">车检到期</div><div class="spec-value">2026年11月</div></div>
+                        <div class="spec-item"><div class="spec-label">颜色</div><div class="spec-value">浅蓝色</div></div>
+                    </div>
+                    <div class="car-features">
+                        <strong>配置亮点：</strong><span data-i18n="car2Features">高顶设计 / 宽敞空间 / 座椅加热 / ETC / 一键启动 / ABS</span>
+                    </div>
+                    <div class="car-description" data-i18n="car2Desc">日本销量长青车型，2022年款仅2.8万公里。高顶设计带来同级最宽敞的头部空间，视野开阔，上下车方便。660cc自然吸气+CVT变速箱，平顺省油，实测油耗约24.6km/L。配备座椅加热、ETC、一键启动等实用配置，是家用代步、跑业务、网约车的高性价比选择。</div>
+                    <div class="car-contact">
+                        <a href="mailto:g9150739@outlook.com" data-i18n="btnInquiry">立即询价</a>
                     </div>
                 </div>
             </div>
 
-            <!-- Car 3: Lexus RX 450h -->
+            <!-- Car 3 -->
             <div class="car-card" data-car-id="3">
                 <div class="car-image">
-                    <img src="images/car5.jpg" alt="Lexus RX 450h">
-                    <span class="car-badge new">ハイブリッドSUV</span>
+                    <img src="images/car5.jpg" alt="雷克萨斯 RX 450h">
+                    <span class="car-badge new">混动SUV</span>
                 </div>
                 <div class="car-info">
-                    <h3 class="car-title">レクサス RX 450h</h3>
-                    <p class="car-subtitle">AL20 Version L / シルバー</p>
-                    <div class="car-specs">
-                        <div class="spec-item"><div class="spec-label">年式</div><div class="spec-value">2018年</div></div>
-                        <div class="spec-item"><div class="spec-label">走行距離</div><div class="spec-value">5.2万km</div></div>
-                        <div class="spec-item"><div class="spec-label">排気量</div><div class="spec-value">3.5L HV</div></div>
-                    </div>
-                    <div class="car-price">
+                    <h3 class="car-title" data-i18n="car3Title">雷克萨斯 RX 450h</h3>
+                    <p class="car-subtitle" data-i18n="car3Subtitle">AL20 Version L / シルバー / 4WD</p>
+                    <div class="car-price-row">
                         <div class="price">398<span class="price-unit">万円</span></div>
-                        <button class="btn-detail" data-i18n="btnDetail">詳細を見る</button>
+                        <span class="price-note">CIF参考价</span>
+                    </div>
+                    <div class="car-specs">
+                        <div class="spec-item"><div class="spec-label">年份</div><div class="spec-value">2018年</div></div>
+                        <div class="spec-item"><div class="spec-label">行驶里程</div><div class="spec-value">5.2万km</div></div>
+                        <div class="spec-item"><div class="spec-label">排量</div><div class="spec-value">3.5L HV</div></div>
+                        <div class="spec-item"><div class="spec-label">驱动方式</div><div class="spec-value">4WD</div></div>
+                        <div class="spec-item"><div class="spec-label">变速箱</div><div class="spec-value">CVT</div></div>
+                        <div class="spec-item"><div class="spec-label">燃料类型</div><div class="spec-value">油电混动</div></div>
+                        <div class="spec-item"><div class="spec-label">油耗(km/L)</div><div class="spec-value">17.2 km/L</div></div>
+                        <div class="spec-item"><div class="spec-label">定员</div><div class="spec-value">5人</div></div>
+                        <div class="spec-item"><div class="spec-label">车检到期</div><div class="spec-value">2026年8月</div></div>
+                        <div class="spec-item"><div class="spec-label">颜色</div><div class="spec-value">银灰色</div></div>
+                    </div>
+                    <div class="car-features">
+                        <strong>配置亮点：</strong><span data-i18n="car3Features">全景天窗 / 真皮电动座椅 / 马克莱文森音响 / 自适应巡航 / 360影像 / 电动尾门</span>
+                    </div>
+                    <div class="car-description" data-i18n="car3Desc">雷克萨斯旗舰混动SUV，2018年Version L顶配版本。3.5L V6混动+全时四驱，动力充沛且安静舒适，综合油耗仅17.2km/L。全车原版原漆，5.2万公里全程4S店保养。内饰采用半苯胺真皮，配备全景天窗、马克莱文森音响、360全景影像、自适应巡航等豪华配置。商务接待和家庭长途出行的最佳选择。</div>
+                    <div class="car-contact">
+                        <a href="mailto:g9150739@outlook.com" data-i18n="btnInquiry">立即询价</a>
                     </div>
                 </div>
             </div>
 
-            <!-- Car 4: Toyota Prius (Blue) -->
+            <!-- Car 4 -->
             <div class="car-card" data-car-id="4">
                 <div class="car-image">
-                    <img src="images/car4.jpg" alt="Toyota Prius">
-                    <span class="car-badge recommend">ハイブリッド</span>
+                    <img src="images/car4.jpg" alt="丰田 普锐斯">
+                    <span class="car-badge recommend">混动</span>
                 </div>
                 <div class="car-info">
-                    <h3 class="car-title">トヨタ プリウス</h3>
-                    <p class="car-subtitle">ZVW30 / ダークブルー</p>
-                    <div class="car-specs">
-                        <div class="spec-item"><div class="spec-label">年式</div><div class="spec-value">2010年</div></div>
-                        <div class="spec-item"><div class="spec-label">走行距離</div><div class="spec-value">8.5万km</div></div>
-                        <div class="spec-item"><div class="spec-label">排気量</div><div class="spec-value">1.8L HV</div></div>
-                    </div>
-                    <div class="car-price">
+                    <h3 class="car-title" data-i18n="car4Title">丰田 普锐斯</h3>
+                    <p class="car-subtitle" data-i18n="car4Subtitle">ZVW30 / ダークブルー / 2WD</p>
+                    <div class="car-price-row">
                         <div class="price">58<span class="price-unit">万円</span></div>
-                        <button class="btn-detail" data-i18n="btnDetail">詳細を見る</button>
+                        <span class="price-note">CIF参考价</span>
+                    </div>
+                    <div class="car-specs">
+                        <div class="spec-item"><div class="spec-label">年份</div><div class="spec-value">2010年</div></div>
+                        <div class="spec-item"><div class="spec-label">行驶里程</div><div class="spec-value">8.5万km</div></div>
+                        <div class="spec-item"><div class="spec-label">排量</div><div class="spec-value">1.8L HV</div></div>
+                        <div class="spec-item"><div class="spec-label">驱动方式</div><div class="spec-value">2WD</div></div>
+                        <div class="spec-item"><div class="spec-label">变速箱</div><div class="spec-value">CVT</div></div>
+                        <div class="spec-item"><div class="spec-label">燃料类型</div><div class="spec-value">油电混动</div></div>
+                        <div class="spec-item"><div class="spec-label">油耗(km/L)</div><div class="spec-value">22.5 km/L</div></div>
+                        <div class="spec-item"><div class="spec-label">定员</div><div class="spec-value">5人</div></div>
+                        <div class="spec-item"><div class="spec-label">车检到期</div><div class="spec-value">2025年12月</div></div>
+                        <div class="spec-item"><div class="spec-label">颜色</div><div class="spec-value">深蓝色</div></div>
+                    </div>
+                    <div class="car-features">
+                        <strong>配置亮点：</strong><span data-i18n="car4Features">ECO模式 / EV纯电行驶 / 无钥匙进入 / 自动空调 / CD音响 / 安全气囊</span>
+                    </div>
+                    <div class="car-description" data-i18n="car4Desc">全球累计销量超500万辆的混动神车，可靠性和燃油经济性极佳。2010年款行驶8.5万公里，1.8L混动+CVT，市区综合油耗约22.5km/L。电池状态良好，无事故履历。虽然是老款车型，但机械耐用、配件便宜、维修简单，非常适合预算有限但追求低油耗的买家，也是发展中国家进口二手车的热门车型。</div>
+                    <div class="car-contact">
+                        <a href="mailto:g9150739@outlook.com" data-i18n="btnInquiry">立即询价</a>
                     </div>
                 </div>
             </div>
 
-            <!-- Car 5: Toyota Aqua (Silver) -->
+            <!-- Car 5 -->
             <div class="car-card" data-car-id="5">
                 <div class="car-image">
-                    <img src="images/car6.jpg" alt="Toyota Aqua">
-                    <span class="car-badge">ハイブリッド</span>
+                    <img src="images/car6.jpg" alt="丰田 Aqua">
+                    <span class="car-badge ">混动</span>
                 </div>
                 <div class="car-info">
-                    <h3 class="car-title">トヨタ アクア</h3>
-                    <p class="car-subtitle">NHP10 G / シルバー</p>
-                    <div class="car-specs">
-                        <div class="spec-item"><div class="spec-label">年式</div><div class="spec-value">2013年</div></div>
-                        <div class="spec-item"><div class="spec-label">走行距離</div><div class="spec-value">7.2万km</div></div>
-                        <div class="spec-item"><div class="spec-label">排気量</div><div class="spec-value">1.5L HV</div></div>
-                    </div>
-                    <div class="car-price">
+                    <h3 class="car-title" data-i18n="car5Title">丰田 Aqua</h3>
+                    <p class="car-subtitle" data-i18n="car5Subtitle">NHP10 G / シルバー / 2WD</p>
+                    <div class="car-price-row">
                         <div class="price">65<span class="price-unit">万円</span></div>
-                        <button class="btn-detail" data-i18n="btnDetail">詳細を見る</button>
+                        <span class="price-note">CIF参考价</span>
+                    </div>
+                    <div class="car-specs">
+                        <div class="spec-item"><div class="spec-label">年份</div><div class="spec-value">2013年</div></div>
+                        <div class="spec-item"><div class="spec-label">行驶里程</div><div class="spec-value">7.2万km</div></div>
+                        <div class="spec-item"><div class="spec-label">排量</div><div class="spec-value">1.5L HV</div></div>
+                        <div class="spec-item"><div class="spec-label">驱动方式</div><div class="spec-value">2WD</div></div>
+                        <div class="spec-item"><div class="spec-label">变速箱</div><div class="spec-value">CVT</div></div>
+                        <div class="spec-item"><div class="spec-label">燃料类型</div><div class="spec-value">油电混动</div></div>
+                        <div class="spec-item"><div class="spec-label">油耗(km/L)</div><div class="spec-value">23.4 km/L</div></div>
+                        <div class="spec-item"><div class="spec-label">定员</div><div class="spec-value">5人</div></div>
+                        <div class="spec-item"><div class="spec-label">车检到期</div><div class="spec-value">2026年3月</div></div>
+                        <div class="spec-item"><div class="spec-label">颜色</div><div class="spec-value">银色</div></div>
+                    </div>
+                    <div class="car-features">
+                        <strong>配置亮点：</strong><span data-i18n="car5Features">SMART STOP / ECO驾驶辅助 / 蓝牙音响 / 多功能方向盘 / 倒车影像 / 自动大灯</span>
+                    </div>
+                    <div class="car-description" data-i18n="car5Desc">丰田旗下紧凑级混动轿车，定位比普锐斯更小巧灵活，适合城市通勤。2013年款7.2万公里，1.5L混动系统，WLTC油耗23.4km/L，一箱油可轻松行驶800公里以上。车身尺寸小，转弯半径短，停车便利，保养成本与雅力士接近。配备蓝牙音响、倒车影像、自动大灯等实用功能，是家庭第二台车或新手练手车的理想选择。</div>
+                    <div class="car-contact">
+                        <a href="mailto:g9150739@outlook.com" data-i18n="btnInquiry">立即询价</a>
                     </div>
                 </div>
             </div>
 
-            <!-- Car 6: Nissan X-Trail -->
+            <!-- Car 6 -->
             <div class="car-card" data-car-id="6">
                 <div class="car-image">
-                    <img src="images/car7.jpg" alt="Nissan X-Trail">
+                    <img src="images/car7.jpg" alt="日产 奇骏">
                     <span class="car-badge new">SUV</span>
                 </div>
                 <div class="car-info">
-                    <h3 class="car-title">日産 エクストレイル</h3>
-                    <p class="car-subtitle">T32 2.0 4WD / シルバー</p>
-                    <div class="car-specs">
-                        <div class="spec-item"><div class="spec-label">年式</div><div class="spec-value">2016年</div></div>
-                        <div class="spec-item"><div class="spec-label">走行距離</div><div class="spec-value">6.8万km</div></div>
-                        <div class="spec-item"><div class="spec-label">排気量</div><div class="spec-value">2.0L</div></div>
-                    </div>
-                    <div class="car-price">
+                    <h3 class="car-title" data-i18n="car6Title">日产 奇骏</h3>
+                    <p class="car-subtitle" data-i18n="car6Subtitle">T32 2.0 4WD / シルバー / 4WD</p>
+                    <div class="car-price-row">
                         <div class="price">148<span class="price-unit">万円</span></div>
-                        <button class="btn-detail" data-i18n="btnDetail">詳細を見る</button>
+                        <span class="price-note">CIF参考价</span>
+                    </div>
+                    <div class="car-specs">
+                        <div class="spec-item"><div class="spec-label">年份</div><div class="spec-value">2016年</div></div>
+                        <div class="spec-item"><div class="spec-label">行驶里程</div><div class="spec-value">6.8万km</div></div>
+                        <div class="spec-item"><div class="spec-label">排量</div><div class="spec-value">2.0L</div></div>
+                        <div class="spec-item"><div class="spec-label">驱动方式</div><div class="spec-value">4WD</div></div>
+                        <div class="spec-item"><div class="spec-label">变速箱</div><div class="spec-value">CVT</div></div>
+                        <div class="spec-item"><div class="spec-label">燃料类型</div><div class="spec-value">汽油</div></div>
+                        <div class="spec-item"><div class="spec-label">油耗(km/L)</div><div class="spec-value">14.8 km/L</div></div>
+                        <div class="spec-item"><div class="spec-label">定员</div><div class="spec-value">5人</div></div>
+                        <div class="spec-item"><div class="spec-label">车检到期</div><div class="spec-value">2026年9月</div></div>
+                        <div class="spec-item"><div class="spec-label">颜色</div><div class="spec-value">银色</div></div>
+                    </div>
+                    <div class="car-features">
+                        <strong>配置亮点：</strong><span data-i18n="car6Features">适时四驱 / 下坡辅助 / 行李架 / 电动尾门 / 日产互联导航 / 全周影像</span>
+                    </div>
+                    <div class="car-description" data-i18n="car6Desc">日产T32世代奇骏，全球畅销的城市SUV。2016年款6.8万公里，2.0L自然吸气发动机匹配CVT，提供适时四驱系统，可应对雨雪天气和轻度越野路况。后备箱空间规整宽敞，后排座椅可完全放平，适合户外旅行、家庭出行和载货需求。配备全周影像、下坡辅助、电动尾门等实用配置，是15万日元价位非常有竞争力的四驱SUV。</div>
+                    <div class="car-contact">
+                        <a href="mailto:g9150739@outlook.com" data-i18n="btnInquiry">立即询价</a>
                     </div>
                 </div>
             </div>
 
-            <!-- Car 7: Nissan Serena Highway Star -->
+            <!-- Car 7 -->
             <div class="car-card" data-car-id="7">
                 <div class="car-image">
-                    <img src="images/car10.jpg" alt="Nissan Serena">
+                    <img src="images/car10.jpg" alt="日产 赛琳娜 e-POWER">
                     <span class="car-badge recommend">MPV e-POWER</span>
                 </div>
                 <div class="car-info">
-                    <h3 class="car-title">日産セレナ ハイウェイスター</h3>
-                    <p class="car-subtitle">C27 e-POWER Highway Star / ブラック</p>
-                    <div class="car-specs">
-                        <div class="spec-item"><div class="spec-label">年式</div><div class="spec-value">2019年</div></div>
-                        <div class="spec-item"><div class="spec-label">走行距離</div><div class="spec-value">4.5万km</div></div>
-                        <div class="spec-item"><div class="spec-label">排気量</div><div class="spec-value">2.0L HV</div></div>
-                    </div>
-                    <div class="car-price">
+                    <h3 class="car-title" data-i18n="car7Title">日产 赛琳娜 e-POWER</h3>
+                    <p class="car-subtitle" data-i18n="car7Subtitle">C27 e-POWER Highway Star / ブラック / 2WD</p>
+                    <div class="car-price-row">
                         <div class="price">228<span class="price-unit">万円</span></div>
-                        <button class="btn-detail" data-i18n="btnDetail">詳細を見る</button>
+                        <span class="price-note">CIF参考价</span>
+                    </div>
+                    <div class="car-specs">
+                        <div class="spec-item"><div class="spec-label">年份</div><div class="spec-value">2019年</div></div>
+                        <div class="spec-item"><div class="spec-label">行驶里程</div><div class="spec-value">4.5万km</div></div>
+                        <div class="spec-item"><div class="spec-label">排量</div><div class="spec-value">1.2L HV</div></div>
+                        <div class="spec-item"><div class="spec-label">驱动方式</div><div class="spec-value">2WD</div></div>
+                        <div class="spec-item"><div class="spec-label">变速箱</div><div class="spec-value">e-POWER</div></div>
+                        <div class="spec-item"><div class="spec-label">燃料类型</div><div class="spec-value">增程混动</div></div>
+                        <div class="spec-item"><div class="spec-label">油耗(km/L)</div><div class="spec-value">20.6 km/L</div></div>
+                        <div class="spec-item"><div class="spec-label">定员</div><div class="spec-value">7人</div></div>
+                        <div class="spec-item"><div class="spec-label">车检到期</div><div class="spec-value">2027年2月</div></div>
+                        <div class="spec-item"><div class="spec-label">颜色</div><div class="spec-value">黑色</div></div>
+                    </div>
+                    <div class="car-features">
+                        <strong>配置亮点：</strong><span data-i18n="car7Features">7座布局 / 双侧电动滑门 / ProPILOT辅助驾驶 / 后排娱乐 / 自动泊车 / 360影像</span>
+                    </div>
+                    <div class="car-description" data-i18n="car7Desc">日产e-POWER混动7座MPV，采用独特的增程式混动技术：1.2L发动机仅作为发电机，车轮完全由电动机驱动，因此拥有纯电车的平顺加速和极低油耗。2019年款行驶4.5万公里，内外成色新。双侧电动滑门、ProPILOT高速辅助驾驶、自动泊车、后排娱乐系统等配置丰富。2+3+2七座布局，空间灵活，是大家庭、商务接待、网约车运营的全能选择。</div>
+                    <div class="car-contact">
+                        <a href="mailto:g9150739@outlook.com" data-i18n="btnInquiry">立即询价</a>
                     </div>
                 </div>
             </div>
@@ -465,142 +525,372 @@
         </div>
     </section>
 
-    <!-- Features -->
     <section class="features">
         <div class="section-title">
-            <h2 data-i18n="featuresTitle">なぜ私たちを選ぶ？</h2>
-            <p data-i18n="featuresSubtitle">安心のサービスと充実のサポート</p>
+            <h2 data-i18n="featuresTitle">为什么选择我们？</h2>
+            <p data-i18n="featuresSubtitle">安心的服务与完善的支持</p>
         </div>
         <div class="features-grid">
             <div class="feature-item">
                 <div class="feature-icon">&#10003;</div>
-                <h3 data-i18n="feat1Title">厳選された車両</h3>
-                <p data-i18n="feat1Desc">全車両を専門スタッフが徹底検査。事故歴なしの良質な車のみを取り扱います。</p>
+                <h3 data-i18n="feat1Title">严选车辆</h3>
+                <p data-i18n="feat1Desc">所有车辆由专业人员进行彻底检查，只提供无事故历史的优质车辆。</p>
             </div>
             <div class="feature-item">
                 <div class="feature-icon">&#128737;</div>
-                <h3 data-i18n="feat2Title">世界配送対応</h3>
-                <p data-i18n="feat2Desc">日本から世界各国へ安全に輸送。ロシア、中東、東南アジア、アフリカまで対応。</p>
+                <h3 data-i18n="feat2Title">全球配送</h3>
+                <p data-i18n="feat2Desc">从日本安全运输到世界各国，覆盖俄罗斯、中东、东南亚、非洲等地区。</p>
             </div>
             <div class="feature-item">
                 <div class="feature-icon">&#128666;</div>
-                <h3 data-i18n="feat3Title">多様な車種ラインナップ</h3>
-                <p data-i18n="feat3Desc">K-carから高級SUV、ファミリーMPVまで幅広い在庫をご用意しています。</p>
+                <h3 data-i18n="feat3Title">丰富车型</h3>
+                <p data-i18n="feat3Desc">从K-car到高级SUV、家庭MPV，库存丰富，应有尽有。</p>
             </div>
             <div class="feature-item">
                 <div class="feature-icon">&#128176;</div>
-                <h3 data-i18n="feat4Title">競争力のある価格</h3>
-                <p data-i18n="feat4Desc">オークション直結で仕入れ、最安値でお客様にお届けします。</p>
+                <h3 data-i18n="feat4Title">具有竞争力的价格</h3>
+                <p data-i18n="feat4Desc">直接与拍卖场采购，以最低价交付给客户。</p>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer>
         <div class="footer-content">
             <div class="footer-section">
-                <h3 data-i18n="footerBrand">日本中古車センター</h3>
+                <h3 data-i18n="footerBrand">日本二手车中心</h3>
                 <p style="color:#aaa;line-height:1.8;" data-i18n="footerAbout">
-                    厳選された高品質中古車を<br>
-                    世界のお客様にお届けします。<br>
-                    安心の保証と充実のアフターサポート。
+                    为世界各国客户提供精选高品质二手车。<br>
+                    安心保障与完善的售后服务。
                 </p>
             </div>
             <div class="footer-section">
-                <h3 data-i18n="footerLinks">クイックリンク</h3>
+                <h3 data-i18n="footerLinks">快速链接</h3>
                 <ul>
-                    <li><a href="#" data-i18n="linkInventory">在庫車両一覧</a></li>
-                    <li><a href="#" data-i18n="linkBuy">買取査定</a></li>
-                    <li><a href="#" data-i18n="linkExport">輸出について</a></li>
-                    <li><a href="#" data-i18n="linkPayment">支払い方法</a></li>
+                    <li><a href="#" data-i18n="linkInventory">库存车辆一览</a></li>
+                    <li><a href="#" data-i18n="linkBuy">车辆收购估价</a></li>
+                    <li><a href="#" data-i18n="linkExport">关于出口</a></li>
+                    <li><a href="#" data-i18n="linkPayment">支付方式</a></li>
                 </ul>
             </div>
             <div class="footer-section">
-                <h3 data-i18n="footerSupport">サポート</h3>
+                <h3 data-i18n="footerSupport">支持</h3>
                 <ul>
-                    <li><a href="#" data-i18n="linkFaq">よくある質問</a></li>
-                    <li><a href="#" data-i18n="linkShipping">輸送について</a></li>
-                    <li><a href="#" data-i18n="linkContact">お問い合わせ</a></li>
-                    <li><a href="#" data-i18n="linkPrivacy">プライバシーポリシー</a></li>
+                    <li><a href="#" data-i18n="linkFaq">常见问题</a></li>
+                    <li><a href="#" data-i18n="linkShipping">运输服务</a></li>
+                    <li><a href="#" data-i18n="linkContact">联系我们</a></li>
+                    <li><a href="#" data-i18n="linkPrivacy">隐私政策</a></li>
                 </ul>
             </div>
             <div class="footer-section">
-                <h3 data-i18n="footerContactTitle">お問い合わせ</h3>
+                <h3 data-i18n="footerContactTitle">联系方式</h3>
                 <p style="color:#aaa;line-height:1.8;" data-i18n="footerContact">
-                    会社名: 鹏程贸易合同会社<br>
+                    公司名: 鹏程贸易合同会社<br>
                     Email: g9150739@outlook.com<br>
                     WeChat: kissik123<br>
-                    営業時間: 9:00-18:00 (JST)<br>
-                    定休日: 日曜日
+                    营业时间: 9:00-18:00 (日本时间)<br>
+                    休息日: 周日
                 </p>
             </div>
         </div>
         <div class="footer-bottom">
-            <p data-i18n="copyright">&copy; 2024 鹏程贸易合同会社. All Rights Reserved.</p>
+            <p data-i18n="copyright">&copy; 2024 鹏程贸易合同会社. 保留所有权利。</p>
         </div>
     </footer>
 
-    <!-- Detail Modal -->
-    <div class="modal-overlay" id="carModal">
-        <div class="modal-content">
-            <button class="modal-close" id="modalClose">&times;</button>
-            <img class="modal-image" id="modalImage" src="" alt="">
-            <div class="modal-body">
-                <h2 class="modal-title" id="modalTitle"></h2>
-                <p class="modal-subtitle" id="modalSubtitle"></p>
-                <div class="modal-price" id="modalPrice"></div>
-                <div class="modal-specs" id="modalSpecs"></div>
-                <div class="modal-description" id="modalDescription"></div>
-                <div class="modal-contact" data-i18n="modalContact">
-                    この車両についてのお問い合わせは <a href="mailto:g9150739@outlook.com">g9150739@outlook.com</a> または WeChat: kissik123 まで
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script>
         const carData = {
-            1: {
-                image: "images/car1.jpg",
-                specs: ["年式", "走行距離", "排気量", "駆動方式", "ミッション", "燃料"]
-            },
-            2: {
-                image: "images/car2.jpg",
-                specs: ["年式", "走行距離", "排気量", "駆動方式", "ミッション", "燃料"]
-            },
-            3: {
-                image: "images/car5.jpg",
-                specs: ["年式", "走行距離", "排気量", "駆動方式", "ミッション", "燃料"]
-            },
-            4: {
-                image: "images/car4.jpg",
-                specs: ["年式", "走行距離", "排気量", "駆動方式", "ミッション", "燃料"]
-            },
-            5: {
-                image: "images/car6.jpg",
-                specs: ["年式", "走行距離", "排気量", "駆動方式", "ミッション", "燃料"]
-            },
-            6: {
-                image: "images/car7.jpg",
-                specs: ["年式", "走行距離", "排気量", "駆動方式", "ミッション", "燃料"]
-            },
-            7: {
-                image: "images/car10.jpg",
-                specs: ["年式", "走行距離", "排気量", "駆動方式", "ミッション", "燃料"]
-            },
-        };
+  "1": {
+    "image": "images/car1.jpg",
+    "year": "2024年",
+    "mileage": "0.3万km",
+    "displacement": "660cc",
+    "drive": "2WD",
+    "transmission": "CVT",
+    "fuel": "汽油",
+    "fuelUr": "پٹرول",
+    "consumption": "25.4",
+    "capacity": "4人",
+    "inspection": "2027年5月",
+    "color": "红色",
+    "colorUr": "سرخ"
+  },
+  "2": {
+    "image": "images/car2.jpg",
+    "year": "2022年",
+    "mileage": "2.8万km",
+    "displacement": "660cc",
+    "drive": "2WD",
+    "transmission": "CVT",
+    "fuel": "汽油",
+    "fuelUr": "پٹرول",
+    "consumption": "24.6",
+    "capacity": "4人",
+    "inspection": "2026年11月",
+    "color": "浅蓝色",
+    "colorUr": "ہلکا نیلا"
+  },
+  "3": {
+    "image": "images/car5.jpg",
+    "year": "2018年",
+    "mileage": "5.2万km",
+    "displacement": "3.5L HV",
+    "drive": "4WD",
+    "transmission": "CVT",
+    "fuel": "油电混动",
+    "fuelUr": "ہائبرڈ",
+    "consumption": "17.2",
+    "capacity": "5人",
+    "inspection": "2026年8月",
+    "color": "银灰色",
+    "colorUr": "چاندی رنگ"
+  },
+  "4": {
+    "image": "images/car4.jpg",
+    "year": "2010年",
+    "mileage": "8.5万km",
+    "displacement": "1.8L HV",
+    "drive": "2WD",
+    "transmission": "CVT",
+    "fuel": "油电混动",
+    "fuelUr": "ہائبرڈ",
+    "consumption": "22.5",
+    "capacity": "5人",
+    "inspection": "2025年12月",
+    "color": "深蓝色",
+    "colorUr": "گہرا نیلا"
+  },
+  "5": {
+    "image": "images/car6.jpg",
+    "year": "2013年",
+    "mileage": "7.2万km",
+    "displacement": "1.5L HV",
+    "drive": "2WD",
+    "transmission": "CVT",
+    "fuel": "油电混动",
+    "fuelUr": "ہائبرڈ",
+    "consumption": "23.4",
+    "capacity": "5人",
+    "inspection": "2026年3月",
+    "color": "银色",
+    "colorUr": "چاندی"
+  },
+  "6": {
+    "image": "images/car7.jpg",
+    "year": "2016年",
+    "mileage": "6.8万km",
+    "displacement": "2.0L",
+    "drive": "4WD",
+    "transmission": "CVT",
+    "fuel": "汽油",
+    "fuelUr": "پٹرول",
+    "consumption": "14.8",
+    "capacity": "5人",
+    "inspection": "2026年9月",
+    "color": "银色",
+    "colorUr": "چاندی"
+  },
+  "7": {
+    "image": "images/car10.jpg",
+    "year": "2019年",
+    "mileage": "4.5万km",
+    "displacement": "1.2L HV",
+    "drive": "2WD",
+    "transmission": "e-POWER",
+    "fuel": "增程混动",
+    "fuelUr": "e-POWER ہائبرڈ",
+    "consumption": "20.6",
+    "capacity": "7人",
+    "inspection": "2027年2月",
+    "color": "黑色",
+    "colorUr": "سیاہ"
+  }
+};
+        const translations = {
+  "zh": {
+    "siteName": "日本二手车中心",
+    "navHome": "首页",
+    "navCars": "库存车辆",
+    "navAbout": "公司简介",
+    "navContact": "联系我们",
+    "heroTitle": "值得信赖的日本二手车",
+    "heroSubtitle": "为您精选高品质二手车 | 全球出口",
+    "inventoryTitle": "库存车辆一览",
+    "inventorySubtitle": "当前在售车辆（共7台）",
+    "btnInquiry": "立即询价",
+    "featuresTitle": "为什么选择我们？",
+    "featuresSubtitle": "安心的服务与完善的支持",
+    "feat1Title": "严选车辆",
+    "feat1Desc": "所有车辆由专业人员进行彻底检查，只提供无事故历史的优质车辆。",
+    "feat2Title": "全球配送",
+    "feat2Desc": "从日本安全运输到世界各国，覆盖俄罗斯、中东、东南亚、非洲等地区。",
+    "feat3Title": "丰富车型",
+    "feat3Desc": "从K-car到高级SUV、家庭MPV，库存丰富，应有尽有。",
+    "feat4Title": "具有竞争力的价格",
+    "feat4Desc": "直接与拍卖场采购，以最低价交付给客户。",
+    "footerBrand": "日本二手车中心",
+    "footerAbout": "为世界各国客户提供精选高品质二手车。<br>安心保障与完善的售后服务。",
+    "footerLinks": "快速链接",
+    "linkInventory": "库存车辆一览",
+    "linkBuy": "车辆收购估价",
+    "linkExport": "关于出口",
+    "linkPayment": "支付方式",
+    "footerSupport": "支持",
+    "linkFaq": "常见问题",
+    "linkShipping": "运输服务",
+    "linkContact": "联系我们",
+    "linkPrivacy": "隐私政策",
+    "footerContactTitle": "联系方式",
+    "footerContact": "公司名: 鹏程贸易合同会社<br>Email: g9150739@outlook.com<br>WeChat: kissik123<br>营业时间: 9:00-18:00 (日本时间)<br>休息日: 周日",
+    "copyright": "&copy; 2024 鹏程贸易合同会社. 保留所有权利。",
+    "specYear": "年份",
+    "specMileage": "行驶里程",
+    "specDisplacement": "排量",
+    "specDrive": "驱动方式",
+    "specTransmission": "变速箱",
+    "specFuel": "燃料类型",
+    "specConsumption": "油耗(km/L)",
+    "specCapacity": "定员",
+    "specInspection": "车检到期",
+    "specColor": "颜色",
+    "labelFeatures": "配置亮点：",
+    "labelCif": "CIF参考价",
+    "car1Title": "大发 Mira e:S",
+    "car1Subtitle": "G Turbo SA III / レッド / 2WD",
+    "car1Desc": "2024年准新车，仅行驶3000公里。搭载660cc涡轮增压发动机，动力轻快，油耗极低（WLTC 25.4km/L），是日本K-Car中的人气省油车型。配备智能辅助刹车、车道偏离预警、倒车影像等安全配置，城市通勤和日常代步首选。车身小巧灵活，停车方便，维护成本低，出口东南亚和非洲市场非常受欢迎。",
+    "car1Features": "涡轮增压 / 智能辅助刹车 / 车道偏离预警 / 倒车影像 / 无钥匙进入 / 原厂导航",
+    "car1Fuel": "汽油",
+    "car1Color": "红色",
+    "car2Title": "铃木 Wagon R",
+    "car2Subtitle": "MH55S / ライトブルー / 2WD",
+    "car2Desc": "日本销量长青车型，2022年款仅2.8万公里。高顶设计带来同级最宽敞的头部空间，视野开阔，上下车方便。660cc自然吸气+CVT变速箱，平顺省油，实测油耗约24.6km/L。配备座椅加热、ETC、一键启动等实用配置，是家用代步、跑业务、网约车的高性价比选择。",
+    "car2Features": "高顶设计 / 宽敞空间 / 座椅加热 / ETC / 一键启动 / ABS",
+    "car2Fuel": "汽油",
+    "car2Color": "浅蓝色",
+    "car3Title": "雷克萨斯 RX 450h",
+    "car3Subtitle": "AL20 Version L / シルバー / 4WD",
+    "car3Desc": "雷克萨斯旗舰混动SUV，2018年Version L顶配版本。3.5L V6混动+全时四驱，动力充沛且安静舒适，综合油耗仅17.2km/L。全车原版原漆，5.2万公里全程4S店保养。内饰采用半苯胺真皮，配备全景天窗、马克莱文森音响、360全景影像、自适应巡航等豪华配置。商务接待和家庭长途出行的最佳选择。",
+    "car3Features": "全景天窗 / 真皮电动座椅 / 马克莱文森音响 / 自适应巡航 / 360影像 / 电动尾门",
+    "car3Fuel": "油电混动",
+    "car3Color": "银灰色",
+    "car4Title": "丰田 普锐斯",
+    "car4Subtitle": "ZVW30 / ダークブルー / 2WD",
+    "car4Desc": "全球累计销量超500万辆的混动神车，可靠性和燃油经济性极佳。2010年款行驶8.5万公里，1.8L混动+CVT，市区综合油耗约22.5km/L。电池状态良好，无事故履历。虽然是老款车型，但机械耐用、配件便宜、维修简单，非常适合预算有限但追求低油耗的买家，也是发展中国家进口二手车的热门车型。",
+    "car4Features": "ECO模式 / EV纯电行驶 / 无钥匙进入 / 自动空调 / CD音响 / 安全气囊",
+    "car4Fuel": "油电混动",
+    "car4Color": "深蓝色",
+    "car5Title": "丰田 Aqua",
+    "car5Subtitle": "NHP10 G / シルバー / 2WD",
+    "car5Desc": "丰田旗下紧凑级混动轿车，定位比普锐斯更小巧灵活，适合城市通勤。2013年款7.2万公里，1.5L混动系统，WLTC油耗23.4km/L，一箱油可轻松行驶800公里以上。车身尺寸小，转弯半径短，停车便利，保养成本与雅力士接近。配备蓝牙音响、倒车影像、自动大灯等实用功能，是家庭第二台车或新手练手车的理想选择。",
+    "car5Features": "SMART STOP / ECO驾驶辅助 / 蓝牙音响 / 多功能方向盘 / 倒车影像 / 自动大灯",
+    "car5Fuel": "油电混动",
+    "car5Color": "银色",
+    "car6Title": "日产 奇骏",
+    "car6Subtitle": "T32 2.0 4WD / シルバー / 4WD",
+    "car6Desc": "日产T32世代奇骏，全球畅销的城市SUV。2016年款6.8万公里，2.0L自然吸气发动机匹配CVT，提供适时四驱系统，可应对雨雪天气和轻度越野路况。后备箱空间规整宽敞，后排座椅可完全放平，适合户外旅行、家庭出行和载货需求。配备全周影像、下坡辅助、电动尾门等实用配置，是15万日元价位非常有竞争力的四驱SUV。",
+    "car6Features": "适时四驱 / 下坡辅助 / 行李架 / 电动尾门 / 日产互联导航 / 全周影像",
+    "car6Fuel": "汽油",
+    "car6Color": "银色",
+    "car7Title": "日产 赛琳娜 e-POWER",
+    "car7Subtitle": "C27 e-POWER Highway Star / ブラック / 2WD",
+    "car7Desc": "日产e-POWER混动7座MPV，采用独特的增程式混动技术：1.2L发动机仅作为发电机，车轮完全由电动机驱动，因此拥有纯电车的平顺加速和极低油耗。2019年款行驶4.5万公里，内外成色新。双侧电动滑门、ProPILOT高速辅助驾驶、自动泊车、后排娱乐系统等配置丰富。2+3+2七座布局，空间灵活，是大家庭、商务接待、网约车运营的全能选择。",
+    "car7Features": "7座布局 / 双侧电动滑门 / ProPILOT辅助驾驶 / 后排娱乐 / 自动泊车 / 360影像",
+    "car7Fuel": "增程混动",
+    "car7Color": "黑色"
+  },
+  "ur": {
+    "siteName": "جاپان یوزڈ کار سینٹر",
+    "navHome": "ہوم",
+    "navCars": "اسٹاک گاڑیاں",
+    "navAbout": "کمپنی کا تعارف",
+    "navContact": "رابطہ کریں",
+    "heroTitle": "قابل اعتماد جاپانی یوزڈ کارز",
+    "heroSubtitle": "اعلیٰ معیار کی چنی ہوئی گاڑیاں | عالمی برآمدات",
+    "inventoryTitle": "اسٹاک میں موجود گاڑیاں",
+    "inventorySubtitle": "فی الحال فروخت کے لیے دستیاب گاڑیاں (کل 7)",
+    "btnInquiry": "ابھی پوچھیں",
+    "featuresTitle": "ہمیں کیوں منتخب کریں؟",
+    "featuresSubtitle": "پرامن سروس اور مکمل سپورٹ",
+    "feat1Title": "چنی ہوئی گاڑیاں",
+    "feat1Desc": "تمام گاڑیاں ماہر عملے کی سخت جانچ سے گزرتی ہیں، صرف بغیر حادثہ کی معیاری گاڑیاں فروخت کرتے ہیں۔",
+    "feat2Title": "عالمی شپنگ",
+    "feat2Desc": "جاپان سے دنیا بھر میں محفوظ نقل و حمل۔ روس، مشرق وسطیٰ، جنوب مشرقی ایشیا، افریقہ تک سروس۔",
+    "feat3Title": "متنوع ماڈلز",
+    "feat3Desc": "K-car سے لے کر لیگژری SUV اور فیملی MPV تک وسیع اسٹاک موجود ہے۔",
+    "feat4Title": "مسابقتی قیمتیں",
+    "feat4Desc": "براہ راست نیلامی سے خرید کر صارفین کو سب سے کم قیمت پر فراہم کرتے ہیں۔",
+    "footerBrand": "جاپان یوزڈ کار سینٹر",
+    "footerAbout": "دنیا بھر کے صارفین کے لیے چنی ہوئی اعلیٰ معیار کی یوزڈ کارز۔<br>اعتماد والی وارنٹی اور مکمل آفٹر سیلز سروس۔",
+    "footerLinks": "فوری لنکس",
+    "linkInventory": "اسٹاک گاڑیاں",
+    "linkBuy": "گاڑی خریداری کا اندازہ",
+    "linkExport": "برآمدات کے بارے میں",
+    "linkPayment": "ادائیگی کے طریقے",
+    "footerSupport": "سپورٹ",
+    "linkFaq": "عام سوالات",
+    "linkShipping": "ٹرانسپورٹ سروس",
+    "linkContact": "رابطہ کریں",
+    "linkPrivacy": "پرائیویسی پالیسی",
+    "footerContactTitle": "رابطہ",
+    "footerContact": "کمپنی: 鹏程贸易合同会社<br>Email: g9150739@outlook.com<br>WeChat: kissik123<br>اوقات کار: 9:00-18:00 (جاپان ٹائم)<br>تعطیل: اتوار",
+    "copyright": "&copy; 2024 鹏程贸易合同会社. جملہ حقوق محفوظ ہیں۔",
+    "specYear": "ماڈل سال",
+    "specMileage": "چلی ہوئی",
+    "specDisplacement": "انجن سائز",
+    "specDrive": "ڈرائیو",
+    "specTransmission": "ٹرانسمیشن",
+    "specFuel": "ایندھن",
+    "specConsumption": "فیول ایوریج",
+    "specCapacity": "سواریاں",
+    "specInspection": "انشورنس ختم",
+    "specColor": "رنگ",
+    "labelFeatures": "اہم فیچرز:",
+    "labelCif": "CIF ریفرنس قیمت",
+    "car1Title": "ڈائیہٹسو میرا ای:ایس",
+    "car1Subtitle": "G Turbo SA III / レッド / 2WD",
+    "car1Desc": "2024 ماڈل، صرف 3,000 کلومیٹر چلی ہوئی۔ 660cc ٹربو انجن، تیز رفتار، انتہائی کم پیٹرول کھپت (WLTC 25.4km/L)۔ جاپان کی مقبول K-car۔ انٹیلیجنٹ ایمرجنسی بریک، لین ڈیپارچر الرٹ، بیک کیمرہ جیسے سیفٹی فیچرز۔ شہر میں چلانے اور ڈیلی کمیوٹ کے لیے بہترین۔ کمxi کٹ اور بحالی کے اخراجات۔",
+    "car1Features": "ٹربو / انٹیلیجنٹ ایمرجنسی بریک / لین ڈیپارچر الرٹ / بیک کیمرہ / کیلیس اینٹری / اوریجنل نیویگیشن",
+    "car1Fuel": "پٹرول",
+    "car1Color": "سرخ",
+    "car2Title": "سوزوکی ویگن آر",
+    "car2Subtitle": "MH55S / ライトブルー / 2WD",
+    "car2Desc": "جاپان کی طویل عرصے سے مقبول گاڑی، 2022 ماڈل، صرف 28,000 کلومیٹر۔ اونچی چھت سے وسیع جگہ، بہترین نظارہ۔ 660cc انجن + CVT، ہموار اور کم پیٹرول کھپت (24.6km/L)۔ سیٹ ہیٹر، ETC، پش اسٹارٹ جیسے عملی فیچرز۔ گھریلو استعمال اور کاروبار کے لیے بہترین قیمت۔",
+    "car2Features": "اونچی چھت / وسیع جگہ / سیٹ ہیٹر / ETC / پش اسٹارٹ / ABS",
+    "car2Fuel": "پٹرول",
+    "car2Color": "ہلکا نیلا",
+    "car3Title": "لیکسس آرایکس 450h",
+    "car3Subtitle": "AL20 Version L / シルバー / 4WD",
+    "car3Desc": "Lexus کا فلیگ شپ ہائبرڈ SUV، 2018 Version L ٹاپ ماڈل۔ 3.5L V6 ہائبرڈ + فل ٹائم 4WD، طاقتور اور پرسکون، ایوریج 17.2km/L۔ اوریجنل پینٹ، 52,000 کلومیٹر 4S سروس۔ انیلائن لیڈھر انٹیریئر، پینورامک سن روف، مارک لیونسن آڈیو، 360 کیمرہ، ایڈاپٹیو کروز۔ بزنس اور فیملی طویل سفر کے لیے بہترین۔",
+    "car3Features": "پینورامک سن روف / لیدھر الیکٹرک سیٹس / مارک لیونسن آڈیو / ایڈاپٹیو کروز کنٹرول / 360 کیمرہ / الیکٹرک ٹیل گیٹ",
+    "car3Fuel": "ہائبرڈ",
+    "car3Color": "چاندی رنگ",
+    "car4Title": "ٹویوٹا پریئس",
+    "car4Subtitle": "ZVW30 / ダークブルー / 2WD",
+    "car4Desc": "دنیا بھر میں 50 لاکھ سے زیادہ فروخت ہونے والی مشہور ہائبرڈ کار۔ 2010 ماڈل، 85,000 کلومیٹر۔ 1.8L ہائبرڈ + CVT، شہر میں 22.5km/L۔ بیٹری کی حالت اچھی، کوئی حادثہ نہیں۔ پرانی ماڈل ہونے کے باوجود مضبوط مشینری، سستے سپیئر پارٹس، آسان مرمت۔ محدود بجٹ والے خریداروں کے لیے بہترین۔",
+    "car4Features": "ECO موڈ / EV موڈ / کیلیس اینٹری / آٹو AC / CD پلیئر / ایئر بیگز",
+    "car4Fuel": "ہائبرڈ",
+    "car4Color": "گہرا نیلا",
+    "car5Title": "ٹویوٹا ایکوا",
+    "car5Subtitle": "NHP10 G / シルバー / 2WD",
+    "car5Desc": "ٹویوٹا کی کمپیکٹ ہائبرڈ سڈان، Prius سے چھوٹی اور شہر میں چلانے میں آسان۔ 2013 ماڈل، 72,000 کلومیٹر۔ 1.5L ہائبرڈ، WLTC 23.4km/L، ایک ٹینک میں 800km+۔ چھوٹی باڈی، کم موڑ رداس، پارکنگ میں آسان۔ بلوٹوتھ، بیک کیمرہ، آٹو ہیڈ لائٹس۔ فیملی دوسری گاڑی یا نئے ڈرائیورز کے لیے بہترین۔",
+    "car5Features": "SMART STOP / ECO ڈرائیو اسسٹ / بلوٹوتھ آڈیو / ملٹی فنکشن اسٹیئرنگ / بیک کیمرہ / آٹو ہیڈ لائٹس",
+    "car5Fuel": "ہائبرڈ",
+    "car5Color": "چاندی",
+    "car6Title": "نissan ایکس ٹریل",
+    "car6Subtitle": "T32 2.0 4WD / シルバー / 4WD",
+    "car6Desc": "نیسان T32 X-Trail، عالمی سطح پر مقبول شہر SUV۔ 2016 ماڈل، 68,000 کلومیٹر۔ 2.0L انجن + CVT، پارٹ ٹائم 4WD، برفانی بارش اور ہلکی آف روڈ کے لیے۔ وسیع اور چوکور ڈکی، پچھلی سیٹیں بالکل فلیٹ ہوجاتی ہیں۔ 360 کیمرہ، ہل ڈیسنٹ، الیکٹرک ٹیل گیٹ۔ 15 لاکھ ین کی قیمت میں انتہائی مسابقتی 4WD SUV۔",
+    "car6Features": "پارٹ ٹائم 4WD / ہل ڈیسنٹ کنٹرول / روف ریل / الیکٹرک ٹیل گیٹ / نیسان کنکٹ نیو / 360 کیمرہ",
+    "car6Fuel": "پٹرول",
+    "car6Color": "چاندی",
+    "car7Title": "نissan سیرینا e-POWER",
+    "car7Subtitle": "C27 e-POWER Highway Star / ブラック / 2WD",
+    "car7Desc": "نیسان e-POWER 7 سیٹر MPV۔ منفرد رینج ایکسٹینڈر ہائبرڈ: 1.2L انجن صرف جنریٹر کے طور پر، پہیے مکمل طور پر الیکٹرک موٹر سے چلتے ہیں۔ 2019 ماڈل، 45,000 کلومیٹر۔ dual پاور سلائیڈنگ ڈورز، ProPILOT ہائی وے اسسٹ، آٹو پارک، ریئر انٹرٹینمنٹ۔ 2+3+2 سیٹنگ، لچکدار جگہ۔ بڑے خاندان، بزنس یا رائڈ شیئرنگ کے لیے بہترین۔",
+    "car7Features": "7 سیٹر /dual پاور سلائیڈنگ ڈورز / ProPILOT ڈرائیو اسسٹ / ریئر انٹرٹینمنٹ / آٹو پارک / 360 کیمرہ",
+    "car7Fuel": "e-POWER ہائبرڈ",
+    "car7Color": "سیاہ"
+  }
+};
 
-        const modal = document.getElementById('carModal');
-        const modalImage = document.getElementById('modalImage');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalSubtitle = document.getElementById('modalSubtitle');
-        const modalPrice = document.getElementById('modalPrice');
-        const modalSpecs = document.getElementById('modalSpecs');
-        const modalDescription = document.getElementById('modalDescription');
-        const modalClose = document.getElementById('modalClose');
         let currentLang = 'zh';
-        const translations = {"zh": {"siteName": "日本二手车中心", "navHome": "首页", "navCars": "库存车辆", "navAbout": "公司简介", "navContact": "联系我们", "heroTitle": "值得信赖的日本二手车", "heroSubtitle": "为您精选高品质二手车 | 全球出口", "inventoryTitle": "库存车辆一览", "inventorySubtitle": "当前在售车辆（共7台）", "btnDetail": "查看详情", "featuresTitle": "为什么选择我们？", "featuresSubtitle": "安心的服务与完善的支持", "feat1Title": "严选车辆", "feat1Desc": "所有车辆由专业人员进行彻底检查，只提供无事故历史的优质车辆。", "feat2Title": "全球配送", "feat2Desc": "从日本安全运输到世界各国，覆盖俄罗斯、中东、东南亚、非洲等地区。", "feat3Title": "丰富车型", "feat3Desc": "从K-car到高级SUV、家庭MPV，库存丰富，应有尽有。", "feat4Title": "具有竞争力的价格", "feat4Desc": "直接与拍卖场采购，以最低价交付给客户。", "footerBrand": "日本二手车中心", "footerAbout": "为世界各国客户提供精选高品质二手车。<br>安心保障与完善的售后服务。", "footerLinks": "快速链接", "linkInventory": "库存车辆一览", "linkBuy": "车辆收购估价", "linkExport": "关于出口", "linkPayment": "支付方式", "footerSupport": "支持", "linkFaq": "常见问题", "linkShipping": "运输服务", "linkContact": "联系我们", "linkPrivacy": "隐私政策", "footerContactTitle": "联系方式", "footerContact": "公司名: 鹏程贸易合同会社<br>Email: g9150739@outlook.com<br>WeChat: kissik123<br>营业时间: 9:00-18:00 (日本时间)<br>休息日: 周日", "copyright": "&copy; 2024 鹏程贸易合同会社. 保留所有权利。", "modalContact": "如需咨询此车辆，请联系 <a href=\"mailto:g9150739@outlook.com\">g9150739@outlook.com</a> 或 WeChat: kissik123", "car1Title": "ダイハツ ミライース e:S", "car1Subtitle": "G Turbo SA III / レッド / 2WD", "car1Price": "98万円", "car1Desc": "低走行の新型K-car。ターボ搭載で走りも軽快、燃費も優秀。街乗りや通勤通学に最適な1台です。", "car1Spec_年式": "2024年", "car1Spec_走行距離": "0.3万km", "car1Spec_排気量": "660cc", "car1Spec_駆動方式": "2WD", "car1Spec_ミッション": "CVT", "car1Spec_燃料": "ガソリン", "car2Title": "スズキ ワゴンR", "car2Subtitle": "MH55S / ライトブルー / 2WD", "car2Price": "75万円", "car2Desc": "日本を代表する定番K-car。広々とした室内空間と優れた視界が人気。日常使いに欠かせない実用車です。", "car2Spec_年式": "2022年", "car2Spec_走行距離": "2.8万km", "car2Spec_排気量": "660cc", "car2Spec_駆動方式": "2WD", "car2Spec_ミッション": "CVT", "car2Spec_燃料": "ガソリン", "car3Title": "レクサス RX 450h", "car3Subtitle": "AL20 Version L / シルバー / 4WD", "car3Price": "398万円", "car3Desc": "レクサスのフラグシップハイブリッドSUV。上質な内装と静かな走行、豊富な装備が魅力。高級感あふれる1台です。", "car3Spec_年式": "2018年", "car3Spec_走行距離": "5.2万km", "car3Spec_排気量": "3.5L HV", "car3Spec_駆動方式": "4WD", "car3Spec_ミッション": "CVT", "car3Spec_燃料": "ハイブリッド", "car4Title": "トヨタ プリウス", "car4Subtitle": "ZVW30 / ダークブルー / 2WD", "car4Price": "58万円", "car4Desc": "世界で最も有名なハイブリッドカー。低燃費で信頼性も高く、輸出市場でも人気のモデルです。", "car4Spec_年式": "2010年", "car4Spec_走行距離": "8.5万km", "car4Spec_排気量": "1.8L HV", "car4Spec_駆動方式": "2WD", "car4Spec_ミッション": "CVT", "car4Spec_燃料": "ハイブリッド", "car5Title": "トヨタ アクア", "car5Subtitle": "NHP10 G / シルバー / 2WD", "car5Price": "65万円", "car5Desc": "コンパクトなハイブリッドカー。プリウスより小回りが利き、都市部での使用に最適です。", "car5Spec_年式": "2013年", "car5Spec_走行距離": "7.2万km", "car5Spec_排気量": "1.5L HV", "car5Spec_駆動方式": "2WD", "car5Spec_ミッション": "CVT", "car5Spec_燃料": "ハイブリッド", "car6Title": "日産 エクストレイル", "car6Subtitle": "T32 2.0 4WD / シルバー", "car6Price": "148万円", "car6Desc": "人気のコンパクトSUV。4WDで悪路も安心、広々としたラゲッジスペースはアウトドアやファミリー向け。", "car6Spec_年式": "2016年", "car6Spec_走行距離": "6.8万km", "car6Spec_排気量": "2.0L", "car6Spec_駆動方式": "4WD", "car6Spec_ミッション": "CVT", "car6Spec_燃料": "ガソリン", "car7Title": "日産セレナ ハイウェイスター", "car7Subtitle": "C27 e-POWER Highway Star / ブラック", "car7Price": "228万円", "car7Desc": "日産のe-POWERハイブリッドミニバン。静かで力強い走りと広々とした7人乗り空間が魅力。ファミリーカーとして最適です。", "car7Spec_年式": "2019年", "car7Spec_走行距離": "4.5万km", "car7Spec_排気量": "2.0L HV", "car7Spec_駆動方式": "2WD", "car7Spec_ミッション": "e-POWER", "car7Spec_燃料": "ハイブリッド", "carSpec_年式_label": "年份", "carSpec_走行距離_label": "行驶里程", "carSpec_排気量_label": "排量", "carSpec_駆動方式_label": "驱动方式", "carSpec_ミッション_label": "变速箱", "carSpec_燃料_label": "燃料"}, "ur": {"siteName": "جاپان یوزڈ کار سینٹر", "navHome": "ہوم", "navCars": "اسٹاک گاڑیاں", "navAbout": "کمپنی کا تعارف", "navContact": "رابطہ کریں", "heroTitle": "قابل اعتماد جاپانی یوزڈ کارز", "heroSubtitle": "اعلیٰ معیار کی چنی ہوئی گاڑیاں | عالمی برآمدات", "inventoryTitle": "اسٹاک میں موجود گاڑیاں", "inventorySubtitle": "فی الحال فروخت کے لیے دستیاب گاڑیاں (کل 7)", "btnDetail": "تفصیلات دیکھیں", "featuresTitle": "ہمیں کیوں منتخب کریں؟", "featuresSubtitle": "پرامن سروس اور مکمل سپورٹ", "feat1Title": "چنی ہوئی گاڑیاں", "feat1Desc": "تمام گاڑیاں ماہر عملے کی سخت جانچ سے گزرتی ہیں، صرف بغیر حادثہ کی معیاری گاڑیاں فروخت کرتے ہیں۔", "feat2Title": "عالمی شپنگ", "feat2Desc": "جاپان سے دنیا بھر میں محفوظ نقل و حمل۔ روس، مشرق وسطیٰ، جنوب مشرقی ایشیا، افریقہ تک سروس۔", "feat3Title": "متنوع ماڈلز", "feat3Desc": "K-car سے لے کر لیگژری SUV اور فیملی MPV تک وسیع اسٹاک موجود ہے۔", "feat4Title": "مسابقتی قیمتیں", "feat4Desc": "براہ راست نیلامی سے خرید کر صارفین کو سب سے کم قیمت پر فراہم کرتے ہیں۔", "footerBrand": "جاپان یوزڈ کار سینٹر", "footerAbout": "دنیا بھر کے صارفین کے لیے چنی ہوئی اعلیٰ معیار کی یوزڈ کارز۔<br>اعتماد والی وارنٹی اور مکمل آفٹر سیلز سروس۔", "footerLinks": "فوری لنکس", "linkInventory": "اسٹاک گاڑیاں", "linkBuy": "گاڑی خریداری کا اندازہ", "linkExport": "برآمدات کے بارے میں", "linkPayment": "ادائیگی کے طریقے", "footerSupport": "سپورٹ", "linkFaq": "عام سوالات", "linkShipping": "ٹرانسپورٹ سروس", "linkContact": "رابطہ کریں", "linkPrivacy": "پرائیویسی پالیسی", "footerContactTitle": "رابطہ", "footerContact": "کمپنی: 鹏程贸易合同会社<br>Email: g9150739@outlook.com<br>WeChat: kissik123<br>اوقات کار: 9:00-18:00 (جاپان ٹائم)<br>تعطیل: اتوار", "copyright": "&copy; 2024 鹏程贸易合同会社. جملہ حقوق محفوظ ہیں۔", "modalContact": "اس گاڑی کے بارے میں دریافت کے لیے <a href=\"mailto:g9150739@outlook.com\">g9150739@outlook.com</a> یا WeChat: kissik123  پر رابطہ کریں۔", "car1Title": "ڈائیہٹسو میرا ای:ایس", "car1Subtitle": "G Turbo SA III / レッド / 2WD", "car1Price": "98万円", "car1Desc": "کم چلی ہوئی نئی K-car۔ ٹربو انجن کے ساتھ ہلکی اور تیز، بہترین فیول ایوریج۔ شہر میں چلانے اور ڈیلی کمیوٹ کے لیے بہترین۔", "car1Spec_年式": "ماڈل سال", "car1Spec_走行距離": "کا فاصلہ", "car1Spec_排気量": "انجن سائز", "car1Spec_駆動方式": "ڈرائیو", "car1Spec_ミッション": "ٹرانسمیشن", "car1Spec_燃料": "ایندھن", "car2Title": "سوزوکی ویگن آر", "car2Subtitle": "MH55S / ライトブルー / 2WD", "car2Price": "75万円", "car2Desc": "جاپان کی مشہور K-car۔ وسیع اندرونی جگہ اور بہترین نظارہ۔ روزمرہ استعمال کے لیے عملی گاڑی۔", "car2Spec_年式": "ماڈل سال", "car2Spec_走行距離": "کا فاصلہ", "car2Spec_排気量": "انجن سائز", "car2Spec_駆動方式": "ڈرائیو", "car2Spec_ミッション": "ٹرانسمیشن", "car2Spec_燃料": "ایندھن", "car3Title": "لیکسس آرایکس 450h", "car3Subtitle": "AL20 Version L / シルバー / 4WD", "car3Price": "398万円", "car3Desc": "Lexus کا فلیگ شپ ہائبرڈ SUV۔ اعلیٰ معیار کا انٹیریئر، پرسکون ڈرائیو، بھرپور فیچرز۔ عیش و آرام سے بھرپور گاڑی۔", "car3Spec_年式": "ماڈل سال", "car3Spec_走行距離": "کا فاصلہ", "car3Spec_排気量": "انجن سائز", "car3Spec_駆動方式": "ڈرائیو", "car3Spec_ミッション": "ٹرانسمیشن", "car3Spec_燃料": "ایندھن", "car4Title": "ٹویوٹا پریئس", "car4Subtitle": "ZVW30 / ダークブルー / 2WD", "car4Price": "58万円", "car4Desc": "دنیا کی مشہور ترین ہائبرڈ کار۔ کم پیٹرول کھپت اور اعلیٰ Reliability۔ ایکسپورٹ مارکیٹ میں مقبول ماڈل۔", "car4Spec_年式": "ماڈل سال", "car4Spec_走行距離": "کا فاصلہ", "car4Spec_排気量": "انجن سائز", "car4Spec_駆動方式": "ڈرائیو", "car4Spec_ミッション": "ٹرانسمیشن", "car4Spec_燃料": "ایندھن", "car5Title": "ٹویوٹا ایکوا", "car5Subtitle": "NHP10 G / シルバー / 2WD", "car5Price": "65万円", "car5Desc": "کمپیکٹ ہائبرڈ کار۔ Prius سے چھوٹی اور شہری استعمال کے لیے زیادہ موزوں۔", "car5Spec_年式": "ماڈل سال", "car5Spec_走行距離": "کا فاصلہ", "car5Spec_排気量": "انجن سائز", "car5Spec_駆動方式": "ڈرائیو", "car5Spec_ミッション": "ٹرانسمیشن", "car5Spec_燃料": "ایندھن", "car6Title": "نissan ایکس ٹریل", "car6Subtitle": "T32 2.0 4WD / シルバー", "car6Price": "148万円", "car6Desc": "مقبول کمپیکٹ SUV۔ 4WD کے ساتھ خراب سڑکوں پر بھی محفوظ، وسیع سامان کی جگہ، بیرونی اور خاندانی سفر کے لیے۔", "car6Spec_年式": "ماڈل سال", "car6Spec_走行距離": "کا فاصلہ", "car6Spec_排気量": "انجن سائز", "car6Spec_駆動方式": "ڈرائیو", "car6Spec_ミッション": "ٹرانسمیشن", "car6Spec_燃料": "ایندھن", "car7Title": "نissan سیرینا ہائی وے اسٹار", "car7Subtitle": "C27 e-POWER Highway Star / ブラック", "car7Price": "228万円", "car7Desc": "Nissan کی e-POWER ہائبرڈ minivan۔ پرسکون اور طاقتور ڈرائیو، کشادہ 7 سیٹر جگہ۔ خاندانی کار کے لیے بہترین۔", "car7Spec_年式": "ماڈل سال", "car7Spec_走行距離": "کا فاصلہ", "car7Spec_排気量": "انجن سائز", "car7Spec_駆動方式": "ڈرائیو", "car7Spec_ミッション": "ٹرانسمیشن", "car7Spec_燃料": "ایندھن", "carSpec_年式_label": "ماڈل سال", "carSpec_走行距離_label": "کا فاصلہ", "carSpec_排気量_label": "انجن سائز", "carSpec_駆動方式_label": "ڈرائیو", "carSpec_ミッション_label": "ٹرانسمیشن", "carSpec_燃料_label": "ایندھن"}};
-
 
         function t(key) {
             const texts = translations[currentLang];
@@ -627,92 +917,30 @@
 
             document.querySelectorAll('.car-card').forEach(card => {
                 const carId = card.dataset.carId;
-                const titleEl = card.querySelector('.car-title');
-                const subEl = card.querySelector('.car-subtitle');
-                const priceEl = card.querySelector('.price');
+                const data = carData[carId];
+                if (!data) return;
+
+                const labels = [
+                    t('specYear'), t('specMileage'), t('specDisplacement'), t('specDrive'),
+                    t('specTransmission'), t('specFuel'), t('specConsumption'), t('specCapacity'),
+                    t('specInspection'), t('specColor')
+                ];
+                const values = [
+                    data.year, data.mileage, data.displacement, data.drive,
+                    data.transmission, lang === 'ur' ? data.fuelUr : data.fuel,
+                    data.consumption + ' km/L', data.capacity, data.inspection,
+                    lang === 'ur' ? data.colorUr : data.color
+                ];
+
                 const specLabels = card.querySelectorAll('.spec-label');
                 const specValues = card.querySelectorAll('.spec-value');
-                const labels = carData[carId].specs;
+                specLabels.forEach((el, idx) => { if (labels[idx]) el.textContent = labels[idx]; });
+                specValues.forEach((el, idx) => { if (values[idx]) el.textContent = values[idx]; });
 
-                if (titleEl) titleEl.textContent = t('car' + carId + 'Title');
-                if (subEl) subEl.textContent = t('car' + carId + 'Subtitle');
-                if (priceEl) priceEl.innerHTML = t('car' + carId + 'Price') + '<span class="price-unit">万円</span>';
-
-                specLabels.forEach((el, idx) => {
-                    const labelKey = labels[idx];
-                    if (labelKey) el.textContent = t('carSpec_' + labelKey + '_label');
-                });
-                specValues.forEach((el, idx) => {
-                    const labelKey = labels[idx];
-                    if (labelKey) el.textContent = t('car' + carId + 'Spec_' + labelKey);
-                });
+                const priceNote = card.querySelector('.price-note');
+                if (priceNote) priceNote.textContent = t('labelCif');
             });
         }
-
-        function openModal(carId) {
-            const car = carData[carId];
-            if (!car) return;
-
-            modalImage.src = car.image;
-            modalImage.alt = t('car' + carId + 'Title');
-            modalTitle.textContent = t('car' + carId + 'Title');
-            modalSubtitle.textContent = t('car' + carId + 'Subtitle');
-            modalPrice.textContent = t('car' + carId + 'Price');
-            modalDescription.textContent = t('car' + carId + 'Desc');
-
-            modalSpecs.innerHTML = '';
-            car.specs.forEach(labelKey => {
-                const value = t('car' + carId + 'Spec_' + labelKey);
-                const label = t('car' + carId + 'Spec_' + labelKey + '_label');
-                modalSpecs.innerHTML += `
-                    <div class="modal-spec-item">
-                        <div class="modal-spec-label">${label}</div>
-                        <div class="modal-spec-value">${value}</div>
-                    </div>
-                `;
-            });
-
-            const contactHtml = t('modalContact');
-            const contactDiv = document.querySelector('.modal-contact');
-            if (contactDiv) contactDiv.innerHTML = contactHtml;
-
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal() {
-            modal.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        document.querySelectorAll('.car-card').forEach(card => {
-            const carId = card.getAttribute('data-car-id');
-            const btn = card.querySelector('.btn-detail');
-            const image = card.querySelector('.car-image');
-
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                openModal(carId);
-            });
-
-            image.addEventListener('click', () => {
-                openModal(carId);
-            });
-        });
-
-        modalClose.addEventListener('click', closeModal);
-
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                closeModal();
-            }
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modal.classList.contains('active')) {
-                closeModal();
-            }
-        });
 
         document.querySelectorAll('.lang-btn').forEach(btn => {
             btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
